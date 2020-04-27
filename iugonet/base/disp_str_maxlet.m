@@ -1,11 +1,12 @@
 function   disp_str_maxlet(str, maxlet)
+%
+% Display a string or char. 
+% 
 
 if nargin < 2, maxlet=80; end
 if nargin < 1, error('Lack of input arguments!'); end
 
-if isstring(str)
-    str = char(str);
-end
+str = char(str);
 
 remstr=str;
 remstrlen=length(remstr);

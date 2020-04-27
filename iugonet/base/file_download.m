@@ -33,12 +33,12 @@ function outfiles = file_download(urls, varargin)
 % Set input arguments
 p = inputParser;
 
-validUrls = @(x) ischar(x) || isstring(x) || iscell(x);
+validUrls = @(x) ischar(x) || iscell(x);
 addRequired(p, 'urls', validUrls);
 
 validRootPath = @(x) ischar(x);
 addParameter(p, 'rootpath', '', validRootPath);
-validFiles = @(x) ischar(x) || isstring(x) || iscell(x);
+validFiles = @(x) ischar(x) || iscell(x);
 addParameter(p, 'files', '', validFiles);
 validUserName = @(x) ischar(x);
 addParameter(p, 'username', '', validUserName);
@@ -88,8 +88,10 @@ outfiles = cell(n_urls,1);
 
 for i=1:n_urls
     % Set URL
-    url_tmp = get_char_string_argument(urls, i, 'urls');
-   
+    % url_tmp = get_char_string_argument(urls, i, 'urls');
+    url_tmp = cellstr(urls);
+    url_tmp = url_tmp{i};
+ 
     % Check connection of URL
 %    J = java.net.URL(url_tmp);
 %    conn = openConnection(J);
@@ -113,7 +115,9 @@ for i=1:n_urls
             local_tmp = fullfile(rootpath, url_tmp(8:length(url_tmp)));
         else
             % Create save folder from files
-            files_tmp = get_char_string_argument(files, i, 'files');
+            % files_tmp = get_char_string_argument(files, i, 'files');
+            files_tmp = cellstr(files);
+            files_tmp = files_tmp{i};
             [filepath,~,~] = fileparts(files_tmp);
             save_dir = fullfile(rootpath, filepath);
             local_tmp = fullfile(rootpath, files_tmp);

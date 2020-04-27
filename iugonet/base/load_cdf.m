@@ -36,7 +36,7 @@ validTime = @(x) isdatetime(x) || ischar(x) || isscalar(x);
 addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
 
-validFiles = @(x) iscell(x) || ischar(x) || isstring(x);
+validFiles = @(x) iscell(x) || ischar(x);
 addRequired(p, 'files', validFiles);
 
 validVarType = @(x) iscell(x) || ischar(x);

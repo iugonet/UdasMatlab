@@ -63,11 +63,11 @@ addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
 
 %----- Input arguments as parameters -----%
-validSite = @(x) iscell(x) || ischar(x) || isstring(x);
+validSite = @(x) iscell(x) || ischar(x);
 addParameter(p, 'site', site_def, validSite);
-validDataType = @(x) iscell(x) || ischar(x) || isstring(x);
+validDataType = @(x) iscell(x) || ischar(x);
 addParameter(p, 'datatype', datatype_def, validDataType);
-validParameters = @(x) iscell(x) || ischar(x) || isstring(x);
+validParameters = @(x) iscell(x) || ischar(x);
 addParameter(p, 'parameter', parameter_def, validParameters);
 validVersion = @(x) isscalar(x);
 addParameter(p, 'version', version_def, validVersion);

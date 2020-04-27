@@ -72,3 +72,7 @@ switch tformat
     otherwise
         tstr='';
 end    
+
+tstr=cellstr(tstr);
+
+end

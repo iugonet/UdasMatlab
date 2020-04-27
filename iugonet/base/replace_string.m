@@ -1,6 +1,6 @@
 function url_ret = replace_string(url, startTime, endTime,...
     site, datatype, parameter, version_list)
-%
+
 % url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
 % site='ath';
 % startTime='2010-03-01';
@@ -32,25 +32,26 @@ DD = file_dailynames(startTime, endTime, 'DD', res_unit);
 hh = file_dailynames(startTime, endTime, 'hh', res_unit);
 
 %----- Replace strings -----%
-url_tmp=strrep(string(url), 'SITE', site);
+url_tmp=strrep(cellstr(url), 'SITE', site);
 url_tmp=strrep(url_tmp, 'DATATYPE', datatype);
 url_tmp=strrep(url_tmp, 'PARAMETER', parameter);
-url_tmp=strrep(url_tmp, 'YYYY', string(YYYY));
-url_tmp=strrep(url_tmp, 'MM', string(MM));
-url_tmp=strrep(url_tmp, 'DD', string(DD));
-url_tmp=strrep(url_tmp, 'hh', string(hh));
+url_tmp=cellstr(repmat(url_tmp, size(YYYY)));
+url_tmp=strrep(url_tmp, cellstr(repmat('YYYY', size(YYYY))), YYYY);
+url_tmp=strrep(url_tmp, cellstr(repmat('MM', size(MM))), MM);
+url_tmp=strrep(url_tmp, cellstr(repmat('DD', size(DD))), DD);
+url_tmp=strrep(url_tmp, cellstr(repmat('hh', size(hh))), hh);
 
 %----- Replace version number -----%
-vl=version_list;
+vl=cellstr(version_list);
 [m, n]=size(version_list);
 if n > m, vl=version_list'; end
 
-str=url_tmp(1);
-url_ret=strrep(str, 'VERSION', vl);
+strvec=cellstr(repmat(url_tmp(1), size(vl)));
+url_ret=strrep(strvec, cellstr(repmat('VERSION', size(vl))), vl);
 if length(url_tmp) > 1
     for i=2:length(url_tmp)
-        str=url_tmp(i);
-        strvec=strrep(str, 'VERSION', vl);
+        strvec=cellstr(repmat(url_tmp(i), size(vl)));
+        strvec=strrep(strvec, cellstr(repmat('VERSION', size(vl))), vl);
         url_ret=cat(1, url_ret, strvec);
     end
 end
