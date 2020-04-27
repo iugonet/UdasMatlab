@@ -140,7 +140,8 @@ end
 
 
 dimensions = {info(1).Variables.Dimensions};
-ind = zeros(nvar,1,'logical');
+% ind = zeros(nvar,1,'logical');
+ind = zeros(nvar,1);
 tm_dim = zeros(nvar, 1);
 for i=1:length(dimensions)
     if isempty(dimensions{i})

@@ -140,7 +140,8 @@ depend_unique = unique(depend_variable);
 
 n_depend = length(depend_unique);
 n_variable_name = size(variable_name, 1);
-ind = zeros(n_variable_name,1,'logical');
+% ind = zeros(n_variable_name,1,'logical');
+ind = zeros(n_variable_name,1);  % for v8.5
 for i=1:n_depend
     for k=1:n_variable_name
         if strcmp(depend_unique(i), variable_name(k))
@@ -247,7 +248,8 @@ if ischar(var_type)
 end
 
 if ~isempty(var_type)
-    ind= zeros(n_variable_name, 1, 'logical');
+%    ind= zeros(n_variable_name, 1, 'logical');
+    ind= zeros(n_variable_name, 1);  % for v8.5
     attr_var_type = [info(1).VariableAttributes.VAR_TYPE(:,2)];
     for i=1:length(var_type)
         switch lower(var_type{i})
