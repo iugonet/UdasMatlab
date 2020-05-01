@@ -9,24 +9,21 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min');
+iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(mm210_mag_msr_info);
 
 %----- Pause -----%
 input('Press any key.');
 
-%----- Load 1 site data -----%
-iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min', 'fixed_varname', 1);
-
 %----- Plot H-component -----%
 figure;
 plot(mm210_mag_msr_1min_time, mm210_mag_msr_1min_hdz(:,1))
-datetick('x', 'mm/dd')
+datetick('x', 'HH:MM')
 title('H-component at MSR')
 xlabel('UT');
 ylabel('nT')
@@ -35,7 +32,7 @@ ylabel('nT')
 input('Press any key.');
 
 %----- Load two sites data and output data in the workspace -----%
-iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', {'msr', 'rik'}, 'fixed_varname', 1);
+iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', {'msr', 'rik'});
 
 %----- Check the loaded data -----%
 whos
@@ -56,5 +53,6 @@ subplot(2,1,2);
 plot(mm210_mag_rik_1sec_time, mm210_mag_rik_1sec_hdz(:,1))
 datetick('x', 'HH:MM')
 title('H-component at RIK')
+xlabel('UT');
 ylabel('nT')
 

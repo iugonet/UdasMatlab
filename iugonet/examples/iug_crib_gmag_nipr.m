@@ -9,19 +9,16 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_gmag_nipr('2010-3-1', '2010-3-5', 'site', 'syo', 'datatype', '1sec');
+iug_load_gmag_nipr('2010-3-1', '2010-3-5', 'site', 'syo', 'datatype', '1sec');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(nipr_mag_syo_1sec_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data -----%
-iug_load_gmag_nipr('2010-3-1', '2010-3-5', 'site', 'syo', 'datatype', '1sec', 'fixed_varname', 1);
 
 %----- Plot H-component -----%
 figure;
@@ -37,8 +34,7 @@ ylabel('nT')
 input('Press any key.');
 
 %----- Load all site data and output data in the workspace -----%
-iug_load_gmag_nipr('2010-3-1', '2010-3-2', 'site', 'all', 'datatype', 'all', 'fixed_varname', 1);
-%iug_load_gmag_nipr('2010-3-1', '2010-3-2', 'site', {'syo', 'hus', 'tjo'}, 'fixed_varname', 1);
+iug_load_gmag_nipr('2010-3-1', '2010-3-2', 'site', 'all', 'datatype', 'all');
 
 %----- Check the loaded data -----%
 whos

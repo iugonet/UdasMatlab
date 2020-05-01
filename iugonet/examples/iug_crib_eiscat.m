@@ -9,19 +9,16 @@
 clear all;
 
 %----- Load 1 site data (ESR-42m) -----%
-[data, info]=iug_load_eiscat('2015-03-20', '2015-03-21', 'site', 'esr', 'antenna', '42m');
+iug_load_eiscat('2015-03-20', '2015-03-21', 'site', 'esr', 'antenna', '42m');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(eiscat_esr_42m_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data (ESR-42m) as predefined variable names -----%
-iug_load_eiscat('2015-03-20', '2015-03-21', 'site', 'esr', 'antenna', '42m', 'fixed_varname', 1);
 
 %----- Plot basic ionospheric parameters -----%
 figure;
@@ -73,7 +70,7 @@ input('Press any key.');
 
 
 %----- Load several sites' data -----%
-iug_load_eiscat('2015-03-21', '2015-03-22', 'site', {'esr', 'tro'}, 'antenna', 'all', 'fixed_varname', 1);
+iug_load_eiscat('2015-03-21', '2015-03-22', 'site', {'esr', 'tro'}, 'antenna', 'all');
 
 %----- Check the loaded data -----%
 whos

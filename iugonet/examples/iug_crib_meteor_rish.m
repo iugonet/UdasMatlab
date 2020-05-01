@@ -12,19 +12,16 @@ clear all
 %----- Load 1 site data -----%
 % Load all the data of zonal, meridional and vertical wind velocities
 % at Biak for the selected parameter in timespan:
-[data, info]=iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', 'bik', 'parameter', 'h2t60min00');
+iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', 'bik', 'parameter', 'h2t60min00');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(iug_meteor_bik_h2t60min00_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data as predefined variable names -----%
-iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', 'bik', 'parameter', 'h2t60min00', 'fixed_varname', 1);
 
 %----- Plot wind data -----%
 figure;
@@ -56,7 +53,7 @@ ylabel('Altitude [km]')
 input('Press any key.');
 
 %----- Load 2 site data as predefined variable names -----%
-iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', {'bik', 'ktb'}, 'parameter', 'h2t60min00', 'fixed_varname', 1);
+iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', {'bik', 'ktb'}, 'parameter', 'h2t60min00');
 
 %----- Plot wind data -----%
 figure;

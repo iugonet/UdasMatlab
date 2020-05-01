@@ -9,19 +9,16 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_asi_nipr('2018-2-16 0:00', '2018-2-16 1:00', 'site', 'tro', 'wavelength', '5577');
+iug_load_asi_nipr('2018-2-16 0:00', '2018-2-16 1:00', 'site', 'tro', 'wavelength', '5577');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(nipr_asi_tro_5577_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data as predifined variable names -----%
-iug_load_asi_nipr('2018-2-16 0:00', '2018-2-16 1:00', 'site', 'tro', 'wavelength', '5577', 'fixed_varname', 1);
 
 %----- Plot image -----%
 disp(datevec(nipr_asi_tro_5577_time(1)))

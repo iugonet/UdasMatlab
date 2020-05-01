@@ -9,22 +9,13 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_gmag_isee_induction('2009-01-03 09:40:00', '2009-01-03 10:10:00', 'site', 'ath');
+iug_load_gmag_isee_induction('2009-01-03 09:40:00', '2009-01-03 10:10:00', 'site', {'ath', 'msr'});
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
-
-%----- Pause -----%
-input('Press any key.');
-
-%----- Load 2 site data -----%
-iug_load_gmag_isee_induction('2009-01-03 09:40:00', '2009-01-03 10:10:00', 'site', {'ath', 'msr'}, 'fixed_varname', 1);
-
-%----- Check the loaded data -----%
-whos
+disp_info(isee_induction_ath_info);
 
 %----- Pause -----%
 input('Press any key.');

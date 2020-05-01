@@ -1,6 +1,6 @@
-function   [data, info]=iug_load_gmag_isee_induction(startTime, endTime, varargin)
+function   iug_load_gmag_isee_induction(startTime, endTime, varargin)
 %
-% [data, info]=iug_load_gmag_isee_induction(startTime, endTime, varargin)
+% iug_load_gmag_isee_induction(startTime, endTime, varargin)
 % 
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
@@ -9,9 +9,6 @@ function   [data, info]=iug_load_gmag_isee_induction(startTime, endTime, varargi
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
-%   fixed_varname:      0: Return output arguments only
-%                       1: Output data as predefined variable names into the
-%                       workspace. (ex., 'iug_mag_asb_1sec')
 %
 % (Output arguments)
 %   data:               Loaded data in cell array
@@ -19,8 +16,8 @@ function   [data, info]=iug_load_gmag_isee_induction(startTime, endTime, varargi
 %                       You can see the metadata by "disp_info(info)".
 %
 % (Examples)
-%   [data, info]=iug_load_gmag_isee_induction('2013-1-1 0:00', '2013-1-1 1:00', 'site', 'ath');
-%   iug_load_gmag_isee_induction('2013-1-1 0:00', '2013-1-1 1:00', 'site', {'ath','msr'}, 'fixed_varname', 1);
+%   iug_load_gmag_isee_induction('2013-1-1 0:00', '2013-1-1 1:00', 'site', 'ath');
+%   iug_load_gmag_isee_induction('2013-1-1 0:00', '2013-1-1 1:00', 'site', {'ath','msr'});
 % 
 
 %********************************%
@@ -48,7 +45,6 @@ downloadonly_def = 0;
 no_download_def = 0;
 username_def = '';
 password_def = '';
-fixed_varname_def = 0;
 
 %===== Set input arguments =====%
 p = inputParser;
@@ -75,8 +71,6 @@ validUserName = @(x) ischar(x);
 addParameter(p, 'username', username_def, validUserName);
 validPassWord = @(x) ischar(x);
 addParameter(p, 'password', password_def, validPassWord);
-validFixed_Varname = @(x) isscalar(x);
-addParameter(p, 'fixed_varname', fixed_varname_def, validFixed_Varname);
 
 parse(p, startTime, endTime, varargin{:});
 startTime    = p.Results.startTime;
@@ -89,7 +83,6 @@ downloadonly = p.Results.downloadonly;
 no_download  = p.Results.no_download;
 username     = p.Results.username;
 password     = p.Results.password;
-fixed_varname     = p.Results.fixed_varname;
 
 %===== Set local dierectory for saving data files =====%
 % ipos=strfind(url, '://')+3;
@@ -107,9 +100,6 @@ if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
 end
 if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
     pr_vec=parameter_list;
-end
-if (length(st_vec)>1 || length(dt_vec)>1 || length(pr_vec)>1) && fixed_varname==0
-    error('Please set fixed_varname=1, if you input vectors of parameters.');
 end
 vs=cellstr(version);
 
@@ -196,13 +186,14 @@ for ist=1:length(st_vec)
                     disp(' ');
                 end                
                 
-                if fixed_varname==1 && ~isempty(data)
+                if ~isempty(data)
                     varname_base = [varname_st_dt_pr, '_'];
                     set_varname(info, data, '');
 
+                    eval(['assignin(''base'', ''', varname_base, 'all'', ', 'data);']);
+                    eval(['assignin(''base'', ''', varname_base, 'info'', ', 'info);']);
                     eval(['assignin(''base'', ''', varname_base, 'time'', ', 'epoch_db_dt);']);
                     eval(['assignin(''base'', ''', varname_base, 'db_dt'', ',  'db_dt);']);
-                    eval(['assignin(''base'', ''', varname_base, 'info'', ', 'info);']);
                     clear data info;
                 end
             end

@@ -9,19 +9,16 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_gmag_nipr_induction('2016-5-1', '2016-5-2', 'site', 'syo', 'datatype', '20hz');
+iug_load_gmag_nipr_induction('2016-5-1', '2016-5-2', 'site', 'syo');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(nipr_imag_syo_20hz_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data -----%
-iug_load_gmag_nipr_induction('2016-5-1', '2016-5-2', 'site', 'syo', 'fixed_varname', 1);
 
 %----- Plot H-component -----%
 figure;

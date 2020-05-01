@@ -9,23 +9,13 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_brio_isee('2017-03-30', '2017-03-31', 'site', 'ath');
+iug_load_brio_isee('2017-03-30', '2017-03-31', 'site', 'ath');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
-
-%----- Pause -----%
-input('Press any key.');
-
-
-%----- Load 1 site data -----%
-iug_load_brio_isee('2017-03-30', '2017-03-31', 'site', 'ath', 'fixed_varname', 1);
-
-%----- Check the loaded data -----%
-whos
+disp_info(isee_brio30_ath_info);
 
 %----- Pause -----%
 input('Press any key.');
@@ -46,5 +36,6 @@ plot(isee_brio30_ath_time, isee_brio30_ath_qdc, 'k-.', isee_brio30_ath_time, ise
 datetick('x', 'HH:MM')
 set(gca, 'ylim', [0, 3]);
 title('Raw and QDC data at ATH')
+xlabel('UT')
 ylabel('V')
 

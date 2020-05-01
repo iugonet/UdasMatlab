@@ -16,19 +16,16 @@ clear all
 %----- Load 1 site data -----%
 % Load all the data of zonal, meridional and vertical wind velocities
 % at Pameungpeuk for the selected parameter in timespan:
-[data, info] = iug_load_mf_rish('2010-2-12', '2010-3-12', 'site', 'pam');
+iug_load_mf_rish('2010-2-12', '2010-3-12', 'site', 'pam');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(iug_mf_pam_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data as predefined variable names -----%
-iug_load_mf_rish('2010-2-12', '2010-3-12', 'site', 'pam', 'fixed_varname', 1);
 
 %----- Plot wind data -----%
 figure;
@@ -71,7 +68,7 @@ ylabel('Altitude [km]')
 input('Press any key.');
 
 %----- Load 2 site data as predefined variable names -----%
-iug_load_mf_rish('2010-02-12', '2010-2-15', 'site', {'pam', 'pon'}, 'fixed_varname', 1);
+iug_load_mf_rish('2010-02-12', '2010-2-15', 'site', {'pam', 'pon'});
 
 %----- Plot wind data -----%
 figure;

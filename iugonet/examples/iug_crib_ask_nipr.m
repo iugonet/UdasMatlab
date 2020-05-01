@@ -9,19 +9,16 @@
 clear all;
 
 %----- Load 1 site data -----%
-[data, info]=iug_load_ask_nipr('2012-1-22', '2012-1-23', 'site', 'tro', 'wavelength', '0000');
+iug_load_ask_nipr('2012-1-22', '2012-1-23', 'site', 'tro', 'wavelength', '0000');
 
 %----- Check the loaded data -----%
 whos
 
 %----- Display metadata -----%
-disp_info(info);
+disp_info(nipr_ask_tro_0000_info);
 
 %----- Pause -----%
 input('Press any key.');
-
-%----- Load 1 site data as predifined variable names -----%
-iug_load_ask_nipr('2012-1-22', '2012-1-23', 'site', 'tro', 'wavelength', '0000', 'fixed_varname', 1);
 
 %----- Plot Keogram -----%
 figure;
@@ -54,7 +51,7 @@ ylabel('E-W')
 input('Press any key.');
 
 %----- Load all site data as predifined variable names -----%
-iug_load_ask_nipr('2018-2-17 20:00', '2018-2-18 4:00', 'site', 'all', 'wavelength', 'all', 'fixed_varname', 1);
+iug_load_ask_nipr('2018-2-17 20:00', '2018-2-18 4:00', 'site', 'all', 'wavelength', 'all');
 
 %----- Check the loaded data -----%
 whos
@@ -94,5 +91,6 @@ h=colorbar;
 h.Label.String='counts';
 datetick('x', 'HH:SS')
 title('NS keogram at HUS')
+xlabel('UT');
 ylabel('N-S')
 
