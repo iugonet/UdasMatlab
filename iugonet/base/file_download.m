@@ -1,4 +1,5 @@
-function outfiles = file_download(urls, varargin) 
+function   outfiles = file_download(urls, varargin) 
+%
 % outfiles = file_download(urls, rootpath, files, username, password)
 %
 % Download files. 
@@ -14,21 +15,14 @@ function outfiles = file_download(urls, varargin)
 %   outfiles:           information of saved data (cell char array)
 %
 % (Example)
-%   urls = char('http://iugonet0.nipr.ac.jp/data/fmag/syo/1sec/2018/nipr_1sec_fmag_syo_20180101_v02.cdf',...
-%       'http://iugonet0.nipr.ac.jp/data/fmag/syo/1sec/2018/nipr_1sec_fmag_syo_20180102_v02.cdf',...
-%       'http://iugonet0.nipr.ac.jp/data/fmag/syo/1sec/2018/nipr_1sec_fmag_syo_20180103_v02.cdf');
-%   files = char('/home/iugonet/matlab_udas/files/nipr_1sec_fmag_syo_20180101_v02.cdf',...
-%       '/home/iugonet/matlab_udas/files/nipr_1sec_fmag_syo_20180102_v02.cdf',...
-%       '/home/iugonet/matlab_udas/files/nipr_1sec_fmag_syo_20180103_v02.cdf');
-%   rootpath = [];
-%   outfiles = file_download(urls, rootpath, files, username, password);
+%   urls = {'http://iugonet0.nipr.ac.jp/data/aaa_20180101_v02.cdf',...
+%           'http://iugonet0.nipr.ac.jp/data/aaa_20180102_v02.cdf',...
+%           'http://iugonet0.nipr.ac.jp/data/aaa_20180103_v02.cdf'};
+%   files = {'/home/iugonet/data/aaa_20180101_v02.cdf',...
+%            '/home/iugonet/data/aaa_20180102_v02.cdf',...
+%            '/home/iugonet/data/aaa_20180103_v02.cdf');
+%   outfiles = file_download(urls, 'files', files);
 %
-
-% Check arguments
-% if nargin < 4, opt = []; end
-% if nargin < 3, files = []; end
-% if nargin < 2, rootpath = []; end
-% if nargin < 1, error('At least urls required.'); end
 
 % Set input arguments
 p = inputParser;

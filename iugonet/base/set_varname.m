@@ -1,18 +1,19 @@
 function    set_varname(info, data, prefix)
-% disp_info(info, opt)
 %
-% Display information.
+% set_varname(info, data, prefix)
 %
-% (argument)
-%   info:               Saved metadata infomation.
-%   opt (option):       opt = 'global': show global attributes.
+% Return variables to the caller function from info and data. 
+% 
+% (Input arguments)
+%   info:     Metadata obtained by load_cdf or load_netcdf
+%   data:     Data obtained by load_cdf or load_netcdf
+%   prefix:   Prefix for the return variables
 %
-% (return value)
+% (Return)
+%   automatically-named variables with the prefix and 
+%   variable name from info.
 %
-% (Example)
-% disp_info(info);
-% disp_info(info, 'global');    % Show global info
-% disp_info(info, 'lat');       % Show specific variable in metadata
+% Written by Y.-M. Tanaka, April 30, 2020
 %
 
 if nargin < 3

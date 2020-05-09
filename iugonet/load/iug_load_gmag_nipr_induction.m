@@ -5,21 +5,25 @@ function   iug_load_gmag_nipr_induction(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'syo' or {'syo', 'hus', 'tjo'})
 %   datatype:           Data type (ex., '1sec')
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)".
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   db_dt:              3 components of the induction magnetometer data (V)
 %
 % (Examples)
 %   iug_load_gmag_nipr_induction('2016-5-1', '2016-5-2', 'site', 'syo', 'datatype', '20hz');
 %   iug_load_gmag_nipr_induction('2016-5-1', '2016-5-2', 'site', {'syo', 'hus'});
 % 
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%

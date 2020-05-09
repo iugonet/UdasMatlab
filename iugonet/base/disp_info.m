@@ -1,7 +1,8 @@
 function disp_info(info, varargin)
+%
 % disp_info(info, opt)
 %
-% Display information.
+% Display information (metadata).
 %
 % (argument)
 %   info:               Saved metadata infomation.

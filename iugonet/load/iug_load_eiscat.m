@@ -5,20 +5,33 @@ function   iug_load_eiscat(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'tro' or {'tro', 'esr'})
 %   antenna:            Antenna type (ex., 'uhf' or {'vhf', '32m', '42m'})
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   alt:                Altitude (km)
+%   range:              Range (km)
+%   Ne:                 Electron density (m^-3)
+%   Ne_err:             Error of electron density (m^-3)
+%   Te:                 Electron temperature (K)
+%   Te_err:             Error of electron temperature (K)
+%   Ti:                 Ion temperature (K)
+%   Ti_err:             Error of ion temperature (K)
+%   Vi:                 Ion velocity (m/s)
+%   Vi_err:             Error of ion velocity (m/s)
 %
 % (Examples)
 %   iug_load_eiscat('2017-1-1', '2017-1-2', 'site', 'asb');
 %   iug_load_eiscat('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
+% 
+% Written by Y.-M. Tanaka, April 30, 2020
 % 
 
 %********************************%

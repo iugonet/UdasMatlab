@@ -1,4 +1,5 @@
 function   [data_ret, info_ret]=load_cdf(startTime, endTime, files, varargin)
+%
 % [data_ret, info_ret] = load_cdf(startTime, endTime, files, var_type)
 %
 % Load CDF files. 
@@ -27,18 +28,14 @@ function   [data_ret, info_ret]=load_cdf(startTime, endTime, files, varargin)
 %
 
 % -------------------------------------------------
-% % Argument check
-% if nargin < 4, var_type = []; end
 
 p = inputParser;
 
 validTime = @(x) isdatetime(x) || ischar(x) || isscalar(x);
 addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
-
 validFiles = @(x) iscell(x) || ischar(x);
 addRequired(p, 'files', validFiles);
-
 validVarType = @(x) iscell(x) || ischar(x);
 addParameter(p, 'var_type', [], validVarType);
 
@@ -50,19 +47,6 @@ files       = p.Results.files;
 var_type    = p.Results.var_type;
 
 % -------------------------------------------------
-
-% Add path of cdf371
-% arch = computer;
-% switch upper(arch)
-%     case 'PCWIN64'
-%         addpath('matlab_cdf371/win64/matlab_cdf371_patch');
-%     case 'MACI64'
-%         addpath('matlab_cdf371/mac64/matlab_cdf371_patch');
-%     case 'GLNXA64'
-%         addpath('/home/iugonet/matlab_udas/devel/v1/matlab_cdf371_patch-64');
-%     otherwise
-%         error('No supported SPDF library for this OS.');
-% end
 
 % Output arguments
 data_ret={};

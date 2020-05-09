@@ -1,13 +1,32 @@
 function url_ret = replace_string(url, startTime, endTime,...
     site, datatype, parameter, version_list)
-
-% url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
-% site='ath';
-% startTime='2010-03-01';
-% endTime='2010-03-05';
-% datatype='1sec';
-% parameter='';
-% version_list={'1','2','3'};
+%
+% url_ret = replace_string(url, startTime, endTime,...
+%                  site, datatype, parameter, version_list)
+%
+% Replace reserved words in the url with strings. 
+%
+% (argument)
+%   url:          a character array of URL which includes reserved words
+%   startTime:    Start time (datetime or char or datenum)
+%   endTime:      End time (datetime or char or datenum)
+%   site:         a character array of site to be replaced with SITE
+%   datatype:     a character array of datatype to be replaced with DATATYPE
+%   parameter:    a character array of parameter to be replaced with PARAMETER
+%   version_list: a cell array of version to be replaced with VERSION
+%
+% (return value)
+%   url_ret:      a cell array of URLs
+%
+% (Example)
+%   url = 'http://iugonet0.nipr.ac.jp/DATATYPE/SITE_YYYYMMDD_v0VERSION.cdf';
+%           'http://iugonet0.nipr.ac.jp/data/aaa_20180102_v02.cdf',...
+%           'http://iugonet0.nipr.ac.jp/data/aaa_20180103_v02.cdf'};
+%   url_ret = replace_string(url, '2017-01-01', '2017-01-02',...
+%                            'abc', '1sec', '', {'1','2'})
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 if nargin < 3,
     error('Need a char, startTime, and endTime as input arguments.');

@@ -5,19 +5,28 @@ function   iug_load_meteor_rish(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'sgk' or {'bik', 'ktb', 'srp'})
 %   parameter:          Parameter (ex., 'h2t60min00' or {'h2t60min00', 'h2t60min30'})
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   range:              Range (km)
+%   uwind:              Zonal wind velocity (m/s)
+%   vwind:              Meridional wind velocity (m/s)
+%   sig_uwind:          Standard deviation of zonal wind velocity (m/s)
+%   sig_vwind:          Standard deviation of meridional wind velocity (m/s)
 %
 % (Examples)
 %   iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', 'bik', 'parameter', 'h2t60min00');
 %   iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', {'bik', 'ktb'});
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%

@@ -5,21 +5,32 @@ function   iug_load_asi_nipr(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'syo' or {'tro', 'hus', 'tjo'})
 %   wavelength:         Fileter wave length (ex., '0000' or {'0000', '4278', '5577'})
 %   version:            Version (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   image:              All-sky images
+%   az:                 Azimuth angle of image pixels (degrees)
+%   ze:                 Zenith angle of image pixels (degrees)
+%   glat:               Geographic latitude of image pixels (degrees)
+%   glon:               Geographic longitude of image pixels (degrees)
+%   mlat:               AACGM latitude of image pixels (degrees)
+%   mlon:               AACGM longitude of image pixels (degrees)
+%   alt:                Altitude (m)
 %
 % (Examples)
 %   iug_load_asi_nipr('2018-2-16 0:00', '2018-2-16 1:00', 'site', 'tro', 'wavelength', '5577');
 %   iug_load_asi_nipr('2018-2-16 0:00', '2018-2-16 1:00', 'site', {'tro','lyr'}, 'wavelength', 'all');
-% 
+%  
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%

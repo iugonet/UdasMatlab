@@ -1,9 +1,24 @@
 function   tstr=file_dailynames(startTime, endTime, tformat, res_unit)
-
-% startTime='2010/1/2 3:10:20';
-% endTime='2010/1/3 5:40:50';
-% tformat='YYYYMMDDhh';
-% res_unit='hour'
+%
+% tstr=file_dailynames(startTime, endTime, tformat, res_unit)
+%
+% Display a character array on the console with 
+% appropreate returns. 
+% 
+% (Input arguments)
+%   startTime:     Start time (datetime or char or datenum)
+%   endTime:       End time (datetime or char or datenum)
+%   tformat:       format of time string (ex., 'YYYY', 'MM', 'DD')
+%   res_unit:      'day' or 'hour'
+%
+% (Output arguments)
+%   tstr:          a cell array of time string
+%
+% (Examples)
+%   tstr=file_dailynames('2017-1-1', '2017-1-2', 'YYYYMMDD');
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 if nargin < 4, res_unit='day'; end
 if nargin < 3, error('Lack of input arguments!'); end

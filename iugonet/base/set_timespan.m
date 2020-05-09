@@ -1,9 +1,24 @@
 function   [st, et] = set_timespan(startTime, num, res_unit)
-
-% startTime='2010/1/2 3:10:20';
-% endTime='2010/1/3 5:40:50';
-% tformat='YYYYMMDDhh';
-% res_unit='hour'
+%
+% [st, et] = set_timespan(startTime, num, res_unit)
+%
+% Get startTime and endTime in serial date number from startTime 
+% and number of days (or years, months, hours,...) from the startTime. 
+% 
+% (Input arguments)
+%   startTime:     Start time (datetime or char or datenum)
+%   num:           Number of days (depend on res_unit)
+%   res_unit:      'year' or 'month' or 'day' or 'hour' or 'minute' or 'second'
+%
+% (Output arguments)
+%   st:            Start time (datenum)
+%   et:            End time (datenum)
+%
+% (Examples)
+%   [st, et] = set_timespan('2017-1-1 10:00', 5, 'hour');
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 if nargin < 3, res_unit='day'; end
 if nargin < 2, error('Lack of input arguments!'); end

@@ -5,21 +5,26 @@ function   iug_load_gmag_mm210(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
-%   site:               Site name (ex., 'asb' or {'asb', 'ama', 'kuj'})
-%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1hr'})
+% (Options)
+%   site:               Site name (ex., 'msr' or {'msr', 'rik', 'can'})
+%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1h'})
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   hdz:                3 components of geomagnetic field vector (nT)
+%   f:                  Absolute value of geomagnetic field (nT)
 %
 % (Examples)
 %   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min');
 %   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', {'msr', 'rik'});
 % 
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%

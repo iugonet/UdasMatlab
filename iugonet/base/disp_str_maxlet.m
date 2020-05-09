@@ -1,7 +1,15 @@
 function   disp_str_maxlet(str, maxlet)
 %
-% Display a string or char. 
+% disp_str_maxlet(str, maxlet)
+%
+% Display a character array on the console with appropreate returns. 
 % 
+% (Input arguments)
+%   str:      a character array (ex., 'This is an example.')
+%   maxlet:   maximum number of characters per line (ex., 100)
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 if nargin < 2, maxlet=80; end
 if nargin < 1, error('Lack of input arguments!'); end

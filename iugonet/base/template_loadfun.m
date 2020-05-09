@@ -1,31 +1,31 @@
-function   [data, info]=template_loadfun(startTime, endTime, varargin)
+function   template_loadfun(startTime, endTime, varargin)
 %
-% [data, info]=template_loadfun(startTime, endTime, varargin)
+% template_loadfun(startTime, endTime, varargin)
 % 
+% A template load function.
+%
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'asb' or {'asb', 'ama', 'kuj'})
 %   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1hr'})
 %   parameter:          Parameter (ex., 'par1' or {'par1', 'par2', 'par3'})
 %   version:            Version number (ex., '1')
-%   downloadonly:       0: Load data after download, 1: Download only
-%   no_download:        0: Download files, 1: No download before loading data
+%   downloadonly:       0:Load data after download, 1:Download only
+%   no_download:        0:Download files, 1:No download before loading data
 %   username:           Username (for https)
 %   password:           Password (for https)
-%   fixed_varname:      0: Return output arguments only
-%                       1: Output data as predefined variable names into the
-%                       workspace. (ex., 'iug_mag_asb_1sec')
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   automatically-named variables
 %
 % (Examples)
-%   [data, info]=template_loadfun('2017-1-1', '2017-1-2', 'site', 'asb');
-%   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'}, 'fixed_varname', 1);
+%   template_loadfun('2017-1-1', '2017-1-2', 'site', 'asb');
+%   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
 % 
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%
@@ -34,7 +34,7 @@ site_list = {'sta1', 'sta2', 'sta3'};
 datatype_list = {'1sec', '1min', '1hr'};
 parameter_list = {'par1', 'par2', 'par3'};
 version_list = {'1', '2', '3'}; % possible version number list
-file_format = 'cdf';
+file_format = 'cdf'; % 'cdf' or 'netcdf'
 url = 'http://www.iugonet.org/data/SITE/DATATYPE/YYYY/mag_SITE_DATATYPE_YYYYMMDD_v0VERSION.cdf';
 rootpath = default_rootpath;
 acknowledgement = sprintf(['You can write the data use policy here.\n',...
@@ -52,7 +52,6 @@ downloadonly_def = 0;
 no_download_def = 0;
 username_def = '';
 password_def = '';
-fixed_varname_def = 0;
 
 %===== Set input arguments =====%
 p = inputParser;
@@ -79,8 +78,6 @@ validUserName = @(x) ischar(x);
 addParameter(p, 'username', username_def, validUserName);
 validPassWord = @(x) ischar(x);
 addParameter(p, 'password', password_def, validPassWord);
-validFixed_Varname = @(x) isscalar(x);
-addParameter(p, 'fixed_varname', fixed_varname_def, validFixed_Varname);
 
 parse(p, startTime, endTime, varargin{:});
 startTime    = p.Results.startTime;
@@ -93,7 +90,6 @@ downloadonly = p.Results.downloadonly;
 no_download  = p.Results.no_download;
 username     = p.Results.username;
 password     = p.Results.password;
-fixed_varname     = p.Results.fixed_varname;
 
 %===== Set local dierectory for saving data files =====%
 ipos=strfind(url, '://')+3;
@@ -111,9 +107,6 @@ if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
 end
 if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
     pr_vec=parameter_list;
-end
-if (length(st_vec)>1 || length(dt_vec)>1 || length(pr_vec)>1) && fixed_varname==0
-    error('Please set fixed_varname=1, if you input vectors of parameters.');
 end
 vs=cellstr(version);
 
@@ -173,7 +166,7 @@ for ist=1:length(st_vec)
                         error('Such a file_format is not allowed in this version.');
                 end
 
-                if fixed_varname==1 && ~isempty(data)
+                if ~isempty(data)
                     varname_base=[varname_st_dt_pr, '_'];
                     pretmp='test_';
                     set_varname(info, data, pretmp);

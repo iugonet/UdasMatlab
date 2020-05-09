@@ -1,4 +1,5 @@
 function [data_ret, info_ret] = load_netcdf(startTime, endTime, files, varargin)
+%
 % [data_ret, info_ret] = load_netcdf(startTime, endTime, files)
 %
 % Load NetCDF files.
@@ -7,6 +8,8 @@ function [data_ret, info_ret] = load_netcdf(startTime, endTime, files, varargin)
 %   startTime:          Start time (datetime or datenum)
 %   endTime:            End time (datetime or datenum)
 %   files:              File names of save files
+%   time_varname(opt):  Variable name for time in NetCDF
+%   time_format(opt):   Format for time in NetCDF
 %
 % (return value)
 %   data_ret:           Data from output of ncread(file).
@@ -23,24 +26,16 @@ function [data_ret, info_ret] = load_netcdf(startTime, endTime, files, varargin)
 %
 
 % -------------------------------------------------
-% Argument check
-% if nargin < 3
-%     disp('ERROR: Lack of arguments.');
-%     return;
-% end
 
 p = inputParser;
 
 validTime = @(x) isdatetime(x) || ischar(x) || isscalar(x);
 addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
-
 validFiles = @(x) iscell(x) || ischar(x);
 addRequired(p, 'files', validFiles);
-
 validTime_Varname = @(x) ischar(x);
 addParameter(p, 'time_varname', '', validTime_Varname);
-
 validTime_Format = @(x) ischar(x);
 addParameter(p, 'time_format', 'yyyy-MM-dd HH:mm:ss Z', validTime_Format);
 
@@ -53,19 +48,6 @@ time_varname = p.Results.time_varname;
 time_format  = p.Results.time_format;
 
 % -------------------------------------------------
-
-% Add path of cdf371
-% arch = computer;
-% switch upper(arch)
-%     case 'PCWIN64'
-%         addpath('matlab_cdf371/win64/matlab_cdf371_patch');
-%     case 'MACI64'
-%         addpath('matlab_cdf371/mac64/matlab_cdf371_patch');
-%     case 'GLNXA64'
-%         addpath('/home/iugonet/matlab_udas/devel/v1/matlab_cdf371_patch-64');
-%     otherwise
-%         error('No supported SPDF library for this OS.');
-% end
 
 % Output arguments
 data_ret={};

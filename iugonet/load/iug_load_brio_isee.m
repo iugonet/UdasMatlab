@@ -5,20 +5,26 @@ function   iug_load_brio_isee(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'msr' or {'msr', 'rik', 'kag'})
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)".
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   cna:                Cosmic Noise Absorption (dB)
+%   qdc:                Quiet Day Curve (V)
+%   raw:                Raw Data (V)
 %
 % (Examples)
 %   iug_load_brio_isee('2017-1-1', '2017-1-2', 'site', 'ath');
 %   iug_load_brio_isee('2017-1-1', '2017-1-2', 'site', {'ath','kap'});
 % 
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%

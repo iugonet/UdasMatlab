@@ -1,10 +1,18 @@
  function   names_out = check_valid_name(names_in, valid_names)
 %
+% names_out = check_valid_name(names_in, valid_names)
 %
+% Compare names_in with valid_names to check if it is valid.
 %
-% valid_names={'aaa', 'bbb', 'ccc'};
-% names_in='aaa';
-
+% (Input arguments)
+%   names_in:      a character array  (ex., 'aaa')
+%   valid_names:   a cell array (ex., {'aaa', 'bbb', 'ccc'})
+%
+% (Output arguments)
+%   names_out:     Valid:names_in, Not valide:''
+%
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %===== Keyword check =====%
 if nargin < 2, error('Lack of input argument!'); end

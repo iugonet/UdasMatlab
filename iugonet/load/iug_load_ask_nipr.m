@@ -5,21 +5,33 @@ function   iug_load_ask_nipr(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'syo' or {'tro', 'hus', 'tjo'})
 %   wavelength:         Fileter wave length (ex., '0000' or {'0000', '4278', '5577'})
 %   version:            Version (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Output arguments)
-%   data:               Loaded data in cell array
-%   info:               Loaded metadata in struct array
-%                       You can see the metadata by "disp_info(info)"
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   keo_ns:             North-South keogram
+%   keo_ew:             East-West keogram
+%   index_ns:           Index for North-South keogram
+%   index_ew:           Index for East-West keogram
+%   glat_ns:            Geographic latitude for North-South keogram (degrees)
+%   glon_ew:            Geographic longitude for East-West keogram (degrees)
+%   mlat_ns:            AACGM latitude for North-South keogram (degrees)
+%   mlon_ew:            AACGM longitude for East-West keogram (degrees)
+%   alt:                Altitude (m)
 %
 % (Examples)
 %   iug_load_ask_nipr('2012-1-22', '2012-1-23', 'site', 'tro', 'wavelength', '0000');
 %   iug_load_ask_nipr('2012-1-22', '2012-1-23', 'site', 'all');
 % 
+% Written by Y.-M. Tanaka, April 30, 2020
+%
 
 %********************************%
 %***** Step1: Set paramters *****%
