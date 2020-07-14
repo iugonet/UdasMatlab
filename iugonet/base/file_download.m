@@ -147,6 +147,9 @@ for i=1:n_urls
             end
         end
 
+        %%%%% Added by Tanaka %%%%%
+        eval(['delete ', save_dir, '/*.html;']);
+
         outfiles{i} = char(outfile_tmp);
 %    end
 end
