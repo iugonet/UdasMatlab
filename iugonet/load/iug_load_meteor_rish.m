@@ -31,11 +31,11 @@ function   iug_load_meteor_rish(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'netcdf';
+prefix='iug_meteor_';
 site_list = {'bik', 'ktb', 'sgk', 'srp'};
 datatype_list = {''};
 parameter_list = {'h2t60min00', 'h2t60min30', 'h4t60min00', 'h4t60min30', 'h4t240min00'};
-file_format = 'netcdf';
-rootpath = default_rootpath;
 acknowledgement = sprintf(['\n',...
     '****************************************************************\n',...
     'Acknowledgement\n',...
@@ -48,7 +48,7 @@ acknowledgement = sprintf(['\n',...
     '(Inter-university Upper atmosphere Global Observation NETwork) project\n',...
     '(http://www.iugonet.org/) funded by the Ministry of Education, Culture, Sports, Science.\n',...
     ' ']);
-prefix='iug_meteor_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%

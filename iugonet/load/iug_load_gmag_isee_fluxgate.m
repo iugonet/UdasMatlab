@@ -32,9 +32,9 @@ function   iug_load_gmag_isee_fluxgate(startTime, endTime, varargin)
 site_list = {'msr', 'rik', 'kag', 'ktb', 'mdm', 'tew'};
 datatype_list = {'1sec', '1min', '1h'};
 parameter_list = {''};
-version_list = {'1'}; % possible version number list
+version_list = {'01'}; % possible version number list
 file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
 rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
@@ -160,7 +160,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath='ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
+            relpath='ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
             if no_download==1,

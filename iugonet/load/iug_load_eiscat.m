@@ -40,9 +40,9 @@ function   iug_load_eiscat(startTime, endTime, varargin)
 site_list = {'tro', 'esr', 'kir', 'sod'};
 % datatype_list = {'uhf', 'vhf', '32m', '42m'};
 parameter_list = {''};
-version_list = {'3'}; % possible version number list
+version_list = {'03'}; % possible version number list
 file_format = 'cdf';
-url = 'http://pc115.seg20.nipr.ac.jp/www/eiscatdata/cdf/basic/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_v0VERSION.cdf';
+url = 'http://pc115.seg20.nipr.ac.jp/www/eiscatdata/cdf/basic/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
 rootpath = default_rootpath;
 acknowledgement = sprintf(['']);
 prefix='eiscat_';
@@ -164,7 +164,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath = 'iugonet/nipr/eiscat/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_v0VERSION.cdf';
+            relpath = 'iugonet/nipr/eiscat/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
             if no_download==1,

@@ -29,11 +29,11 @@ function   iug_load_mf_rish(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'netcdf';
+prefix='iug_mf_';
 site_list = {'pam', 'pon'};
 datatype_list = {''};
 parameter_list = {''};
-file_format = 'netcdf';
-rootpath = default_rootpath;
 acknowledgement = sprintf(['\n',...
     '****************************************************************\n',...
     'Acknowledgement\n',...
@@ -46,7 +46,7 @@ acknowledgement = sprintf(['\n',...
     '(http://www.iugonet.org/) funded by the Ministry of Education, Culture, Sports, Science\n',...
     'and Technology (MEXT), Japan.\n',...
     ' ']);
-prefix='iug_mf_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%

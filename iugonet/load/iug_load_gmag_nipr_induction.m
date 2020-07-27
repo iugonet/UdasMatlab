@@ -31,9 +31,9 @@ function   iug_load_gmag_nipr_induction(startTime, endTime, varargin)
 site_list = {'syo', 'hus', 'tjo', 'aed', 'isa'};
 % datatype_list = {'1sec', '2sec', '02hz'};
 parameter_list = {''};
-version_list = {'1','2'}; % possible version number list
+version_list = {'01','02'}; % possible version number list
 file_format = 'cdf';
-url = 'http://iugonet0.nipr.ac.jp/data/imag/SITE/DATATYPE/YYYY/nipr_DATATYPE_imag_SITE_YYYYMMDD_v0VERSION.cdf';
+url = 'http://iugonet0.nipr.ac.jp/data/imag/SITE/DATATYPE/YYYY/nipr_DATATYPE_imag_SITE_YYYYMMDD_vVERSION.cdf';
 rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
@@ -161,7 +161,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath='iugonet/nipr/imag/SITE/DATATYPE/YYYY/nipr_DATATYPE_fmag_SITE_YYYYMMDD_v0VERSION.cdf';
+            relpath='iugonet/nipr/imag/SITE/DATATYPE/YYYY/nipr_DATATYPE_fmag_SITE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
 

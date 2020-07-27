@@ -35,12 +35,12 @@ function   iug_load_asi_nipr(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
-site_list = {'hus', 'tjo', 'tro', 'lyr', 'spa', 'syo', 'mcm'};
+site_list = {'hus', 'kil', 'krn', 'lyr', 'mcm', 'skb', 'sod', 'spa', 'syo', 'tja', 'tjo', 'tro'};
 datatype_list = {'0000', '4278', '5577', '6300'};
 parameter_list = {''};
-version_list = {'1', '2'}; % possible version number list
+version_list = {'01', '02'}; % possible version number list
 file_format = 'cdf';
-url = ['http://iugonet0.nipr.ac.jp/data/asi/SITE/YYYY/MM/DD/nipr_asi_SITE_DATATYPE_YYYYMMDDhh_v0VERSION.cdf'];
+url = ['http://iugonet0.nipr.ac.jp/data/asi/SITE/YYYY/MM/DD/nipr_asi_SITE_DATATYPE_YYYYMMDDhh_vVERSION.cdf'];
 rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
@@ -151,7 +151,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath = 'iugonet/nipr/asi/SITE/YYYY/MM/DD/nipr_ask_SITE_DATATYPE_YYYYMMDDhh_v0VERSION.cdf';
+            relpath = 'iugonet/nipr/asi/SITE/YYYY/MM/DD/nipr_ask_SITE_DATATYPE_YYYYMMDDhh_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
             if no_download==1,

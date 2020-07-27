@@ -36,7 +36,7 @@ pcolor(nipr_imag_syo_20hz_time(1)+t/86400, f, 20*log10(abs(s)+eps));
 shading flat;
 set(gca, 'ylim', [0, 2], 'clim', [-20, 50]);
 colormap('jet');
-colorbar;
+% colorbar;
 datetick('x', 'HH:MM')
 title('Dinamic Spectrum of NS-component at SYO')
 xlabel('UT');

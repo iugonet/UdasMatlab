@@ -33,9 +33,9 @@ site_list = {'ama', 'asb', 'daw', 'her', 'hln', 'kuj', 'laq', 'mcq', 'mgd', 'mlb
              'mut', 'onw', 'ptk', 'wad', 'yap'};
 datatype_list = {'1sec'};
 parameter_list = {''};
-version_list = {'1'}; % possible version number list
+version_list = {'01'}; % possible version number list
 file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
 rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
@@ -146,7 +146,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath='iugonet/icswse/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_v0VERSION.cdf';
+            relpath='iugonet/icswse/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
 

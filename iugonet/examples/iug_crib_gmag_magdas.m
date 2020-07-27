@@ -69,9 +69,9 @@ pcolor(magdas_mag_kuj_1sec_time(1)+double(t/86400), f, 20*log10(abs(s)+eps));
 shading flat;
 set(gca, 'ylim', [0, 0.1], 'yscale', 'log', 'clim', [-40 80]);
 colormap('jet');
-colorbar;
+% colorbar;
 datetick('x', 'HH:MM')
-title('Dinamic Spectrum of H-component at KUJ')
+title('Dynamic Spectrum of H-component at KUJ')
 xlabel('UT');
 ylabel('frequency [Hz]')
 

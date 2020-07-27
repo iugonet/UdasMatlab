@@ -44,11 +44,11 @@ subplot(4,1,3);
 pcolor(isee_induction_ath_time(1)+double(t1/86400), f1, 20*log10(abs(s1)+eps));
 shading flat;
 colormap('jet');
-colorbar;
+% colorbar;
 datetick('x', 'HH:MM')
 set(gca, 'yscale', 'log', 'clim', [-40, 40],...
          'xlim', [datenum('2009-01-03 09:40'), datenum('2009-01-03 10:10')]);
-title('Dinamic Spectrum of NS-component at ATH')
+title('Dynamic Spectrum of NS-component at ATH')
 xlabel('UT');
 ylabel('frequency [Hz]')
 
@@ -56,11 +56,11 @@ subplot(4,1,4);
 pcolor(isee_induction_msr_time(1)+double(t2/86400), f2, 20*log10(abs(s2)+eps));
 shading flat;
 colormap('jet');
-colorbar;
+% colorbar;
 datetick('x', 'HH:MM')
 set(gca, 'yscale', 'log', 'clim', [-20, 40],...
          'xlim', [datenum('2009-01-03 09:40'), datenum('2009-01-03 10:10')]);
-title('Dinamic Spectrum of NS-component at MSR')
+title('Dynamic Spectrum of NS-component at MSR')
 xlabel('UT');
 ylabel('frequency [Hz]')
 
