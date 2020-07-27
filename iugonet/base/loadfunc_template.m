@@ -1,8 +1,8 @@
-function   template_loadfun(startTime, endTime, varargin)
+function   loadfunc_template(startTime, endTime, varargin)
 %
-% template_loadfun(startTime, endTime, varargin)
+% loadfun_template(startTime, endTime, varargin)
 % 
-% A template load function.
+% A template of load function.
 %
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
@@ -25,33 +25,35 @@ function   template_loadfun(startTime, endTime, varargin)
 %   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
 % 
 % Written by Y.-M. Tanaka, April 30, 2020
+% Modified by Y.-M. Tanaka, July 27, 2020
 %
 
 %********************************%
-%***** Step1: Set paramters *****%
+%***** Step1: Set parameters *****%
 %********************************%
-site_list = {'sta1', 'sta2', 'sta3'};
-datatype_list = {'1sec', '1min', '1hr'};
-parameter_list = {'par1', 'par2', 'par3'};
-version_list = {'1', '2', '3'}; % possible version number list
 file_format = 'cdf'; % 'cdf' or 'netcdf'
-url = 'http://www.iugonet.org/data/SITE/DATATYPE/YYYY/mag_SITE_DATATYPE_YYYYMMDD_v0VERSION.cdf';
-rootpath = default_rootpath;
+url = 'http://www.iugonet.org/data/SITE/DATATYPE/YYYY/mag_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
+prefix = 'iug_';
+site_list = {''}; % ex. {'sta1', 'sta2', 'sta3'}
+datatype_list = {''}; % ex. {'1sec', '1min', '1hr'}
+parameter_list = {''}; % ex. {'par1', 'par2', 'par3'}
+version_list = {''}; % ex. {'01', '02', '03'}
 acknowledgement = sprintf(['You can write the data use policy here.\n',...
     'This description is displayed when you use this load procedure.']);
-prefix='iug_mag_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
 %*************************************%
-site_def = 'sta1';
-datatype_def = '1sec';
-parameter_def = 'par1';
+site_def = '';
+datatype_def = '';
+parameter_def = '';
 version_def = version_list;
 downloadonly_def = 0;
 no_download_def = 0;
 username_def = '';
 password_def = '';
+time_format='yyyy-MM-dd HH:mm:ss Z'; % Time format string for NetCDF
 
 %===== Set input arguments =====%
 p = inputParser;
@@ -91,7 +93,7 @@ no_download  = p.Results.no_download;
 username     = p.Results.username;
 password     = p.Results.password;
 
-%===== Set local dierectory for saving data files =====%
+%===== Set local directory for saving data files =====%
 ipos=strfind(url, '://')+3;
 relpath = url(ipos:end);
 
@@ -161,7 +163,7 @@ for ist=1:length(st_vec)
                     case 'cdf'
                         [data, info]=load_cdf(startTime, endTime, files);
                     case 'netcdf'
-                        [data, info]=load_netcdf(startTime, endTime, files);
+                        [data, info]=load_netcdf(startTime, endTime, files, 'time_format', time_format);
                     otherwise
                         error('Such a file_format is not allowed in this version.');
                 end
