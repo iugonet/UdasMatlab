@@ -148,7 +148,10 @@ for i=1:n_urls
         end
 
         %%%%% Added by Tanaka %%%%%
-        eval(['delete ', save_dir, '/*.html;']);
+        htmlfile=dir([save_dir, '/*.html']);
+        if ~isempty(htmlfile),
+            eval(['delete ', save_dir, '/*.html;']);
+        end
 
         outfiles{i} = char(outfile_tmp);
 %    end

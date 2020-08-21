@@ -105,18 +105,6 @@ end
 % Look for time dependency
 variable_name = info(1).Variables(:,1);
 depend_variable = info(1).VariableAttributes.DEPEND_0;
-
-%********** Temporary by Tanaka **********%
-idv_idx=1;
-for idv=1:size(char(depend_variable{:,1}),1)
-    if strcmp(depend_variable{idv_idx,2},'altitude')
-        depend_variable(idv_idx, :)=[];
-    else
-        idv_idx=idv_idx+1;
-    end
-end
-%*****************************************%
-
 time_variable = unique(depend_variable(:,2));
 
 % Pick up time dependent variables

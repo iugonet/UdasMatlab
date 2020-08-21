@@ -31,5 +31,5 @@ colormap(gray);
 set(gca, 'clim', [0, 250], 'dataaspectratio', [1,1,1]);
 h=colorbar;
 h.Label.String='counts';
-title('5577nm image at TRO at 00:00:00 UT');
+title('557.7nm image at TRO at 00:00:00 UT');
 
