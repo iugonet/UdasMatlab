@@ -51,5 +51,3 @@ switch res_unit
     otherwise
         error('Such a res_unit is now allowed!');
 end 
-
-end    

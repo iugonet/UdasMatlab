@@ -75,6 +75,3 @@ if length(url_tmp) > 1
     end
 end
 url_ret=cellstr(url_ret);
-
-end
-

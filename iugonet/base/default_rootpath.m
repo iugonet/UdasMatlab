@@ -15,5 +15,3 @@ if ispc
 else
     rootpath = '~/data/';
 end
-
-end
