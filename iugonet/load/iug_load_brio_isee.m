@@ -29,16 +29,16 @@ function   iug_load_brio_isee(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/riometer/SITE/YYYY/isee_64hz_brio30_SITE_YYYYMMDD_vVERSION.cdf';
+prefix='isee_brio';
 site_list = {'ath', 'kap', 'gak', 'hus', 'zgn', 'ist'};
 datatype_list = {'30'};
 parameter_list = {''};
 version_list = {'01'}; % possible version number list
-file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/riometer/SITE/YYYY/isee_64hz_brio30_SITE_YYYYMMDD_vVERSION.cdf';
-rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
-prefix='isee_brio';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%

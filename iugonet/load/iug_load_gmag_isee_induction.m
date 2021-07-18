@@ -27,16 +27,16 @@ function   iug_load_gmag_isee_induction(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/induction/SITE/YYYY/MM/isee_induction_SITE_YYYYMMDDhh_vVERSION.cdf';
+prefix='isee_induction';
 site_list = {'ath', 'mgd', 'ptk', 'msr', 'sta', 'gak', 'kap', 'zgn', 'hus'};
 datatype_list = {''};
 parameter_list = {''};
 version_list = {'01'}; % possible version number list
-file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/induction/SITE/YYYY/MM/isee_induction_SITE_YYYYMMDDhh_vVERSION.cdf';
-rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
-prefix='isee_induction_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -116,7 +116,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

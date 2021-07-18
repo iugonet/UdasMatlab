@@ -1,52 +1,39 @@
-function   iug_load_gmag_mm210(startTime, endTime, varargin)
+function   iug_load_irio_nipr(startTime, endTime, varargin)
 %
-% iug_load_gmag_mm210(startTime, endTime, varargin)
+% [data, info]=template_loadfun(startTime, endTime, varargin)
 % 
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
-% (Options)
-%   site:               Site name (ex., 'msr' or {'msr', 'rik', 'can'})
-%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1h'})
+%   site:               Site name (ex., 'syo' or {'syo', 'tjo', 'hus'})
+%   datatype:           Data type (ex., '30' or {'30', '38'})
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Returns)
-%   all:                a cell array that includes all data
-%   info:               Metadata
-%   time:               a serial date number
-%   hdz:                3 components of geomagnetic field vector (nT)
-%   f:                  Absolute value of geomagnetic field (nT)
-%
 % (Examples)
-%   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min');
-%   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', {'msr', 'rik'});
+%   iug_load_irio_nipr('2017-1-1', '2017-1-2', 'site', 'syo');
+%   iug_load_irio_nipr('2017-1-1', '2017-1-2', 'site', {'syo','hus'});
 % 
-% Written by Y.-M. Tanaka, April 30, 2020
-%
 
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
 file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/mm210/DATATYPE/SITE/YYYY/mm210_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
-prefix='mm210_mag';
-site_list = {'tik', 'zgn', 'yak', 'irt', 'ppi', 'bji', 'lnp', 'mut', 'ptn', 'wtk',...
-             'lmt', 'kat', 'ktn', 'chd', 'zyk', 'mgd', 'ptk', 'msr', 'rik', 'onw',...
-             'kag', 'ymk', 'cbi', 'gua', 'yap', 'kor', 'ktb', 'bik', 'wew', 'daw',...
-             'wep', 'bsv', 'dal', 'can', 'adl', 'kot', 'cst', 'ewa', 'asa', 'mcq'};
-datatype_list = {'1sec', '1min', '1h'};
+url = 'http://iugonet0.nipr.ac.jp/data/irio/SITE/YYYY/nipr_h0_irioDATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
+prefix='nipr_irio';
+site_list = {'syo', 'hus', 'tjo'};
+datatype_list = {'30', '38'};
 parameter_list = {''};
-version_list = {'01'}; % possible version number list
+version_list = {'01', '02', '03'}; % possible version number list
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
-%     'This description is displayed when you use this load procedure.']);
+%    'This description is displayed when you use this load procedure.']);
 rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
 %*************************************%
-site_def = 'can';
+site_def = 'syo';
 datatype_def = 'all';
 parameter_def = '';
 version_def = version_list;
@@ -64,11 +51,11 @@ addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
 
 %----- Input arguments as parameters -----%
-validSite = @(x) iscell(x) || ischar(x) || isstring(x);
+validSite = @(x) iscell(x) || ischar(x);
 addParameter(p, 'site', site_def, validSite);
-validDataType = @(x) iscell(x) || ischar(x) || isstring(x);
+validDataType = @(x) iscell(x) || ischar(x);
 addParameter(p, 'datatype', datatype_def, validDataType);
-validParameters = @(x) iscell(x) || ischar(x) || isstring(x);
+validParameters = @(x) iscell(x) || ischar(x);
 addParameter(p, 'parameter', parameter_def, validParameters);
 validVersion = @(x) isscalar(x);
 addParameter(p, 'version', version_def, validVersion);
@@ -112,21 +99,6 @@ if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
 end
 vs=cellstr(version);
 
-%%%%% Added below %%%%%
-idx=find(strcmp(dt_vec, '1s'));
-if ~isempty(idx), dt_vec{idx}='1sec'; end
-idx=find(strcmp(dt_vec, '1m'));
-if ~isempty(idx), dt_vec{idx}='1min'; end
-idx=find(strcmp(dt_vec, '1hr'));
-if ~isempty(idx), dt_vec{idx}='1h'; end
-
-dt_vec_org=dt_vec;
-idx_1h=find(strcmp(dt_vec, '1h'), 1);
-if ~isempty(idx_1h) 
-    dt_vec{idx_1h}='1min';
-    dt_vec=unique(dt_vec);
-end
-
 %===== Loop for site, datatype, and parameter =====%
 %----- Loop for site -----%
 for ist=1:length(st_vec)
@@ -163,7 +135,7 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath = 'ergsc/ground/geomag/mm210/DATATYPE/SITE/YYYY/mm210_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
+            relpath = 'iugonet/nipr/irio/SITE/YYYY/nipr_h0_irioDATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
             if no_download==1,
@@ -191,17 +163,15 @@ for ist=1:length(st_vec)
                     disp(info.GlobalAttributes.Logical_source_description{1});
                     disp(' ');
                     disp(['Information about ', info.GlobalAttributes.Station_code{1}]);
-                    disp(['PI and Host PI(s): ', info.GlobalAttributes.PI_name{1}]);
-                    piaff=strsplit(info.GlobalAttributes.PI_affiliation{1}, '\([1-9]\)',...
-                        'DelimiterType','RegularExpression');
-                    disp('Affiliations:');
-                    for i=1:length(piaff)
-                        disp(piaff{i});
-                    end
                     disp(' ');
-                    disp('Rules of the Road for 210 MM Data Use:');
+                    disp(['PI: ', info.GlobalAttributes.PI_name{1}]);
+                    disp(' ');
+                    disp('Affiliations:');
+                    disp_str_maxlet(info.GlobalAttributes.PI_affiliation{1});
+                    disp(' ');
+                    disp('Rules of the Road for Imaging Riometer Data:');
                     for i=1:length(info.GlobalAttributes.TEXT)
-                        disp(info.GlobalAttributes.TEXT{i});
+                        disp_str_maxlet(info.GlobalAttributes.TEXT{i});
                     end
                     disp(' ');
                     disp([info.GlobalAttributes.LINK_TEXT{1}, ' ', info.GlobalAttributes.HTTP_LINK{1}]);
@@ -210,31 +180,19 @@ for ist=1:length(st_vec)
                 end
 
                 if ~isempty(data)
-                    varname_base = [prefix, st, '_'];
+                    varname_base = [varname_st_dt_pr, '_'];
                     set_varname(info, data, '');
 
                     eval(['assignin(''base'', ''', varname_base, 'all'', ', 'data);']);
                     eval(['assignin(''base'', ''', varname_base, 'info'', ', 'info);']);
-                    switch dt
-                        case '1sec'
-                            eval(['assignin(''base'', ''', varname_base, '1sec_time'', ', 'epoch_1sec);']);
-                            eval(['assignin(''base'', ''', varname_base, '1sec_hdz'', ',  'hdz_1sec);']);
-                            eval(['assignin(''base'', ''', varname_base, '1sec_f'', ', 'f_1sec);']);
-                        case '1min'
-                            if ~isempty(find(strcmp(dt_vec_org, '1min'), 1))
-                                eval(['assignin(''base'', ''', varname_base, '1min_time'', ', 'epoch_1min);']);
-                                eval(['assignin(''base'', ''', varname_base, '1min_hdz'', ',  'hdz_1min);']);
-                                eval(['assignin(''base'', ''', varname_base, '1min_f'', ', 'f_1min);']);
-                            end
-                            if ~isempty(find(strcmp(dt_vec_org, '1h'), 1))
-                                eval(['assignin(''base'', ''', varname_base, '1h_time'', ', 'epoch_1h);']);
-                                eval(['assignin(''base'', ''', varname_base, '1h_hdz'', ',  'hdz_1h);']);
-                                eval(['assignin(''base'', ''', varname_base, '1h_f'', ', 'f_1h);']);
-                            end
-                        otherwise
-                            error('Such datatype is not allowed!');
-                    end
-
+                    eval(['assignin(''base'', ''', varname_base, 'time_1sec'', ', 'epoch_1sec);']);
+                    eval(['assignin(''base'', ''', varname_base, 'time_1min'', ', 'epoch_1min);']);
+                    eval(['assignin(''base'', ''', varname_base, 'cna'', ',  'cna);']);
+                    eval(['assignin(''base'', ''', varname_base, 'qdc'', ',  'qdc);']);
+                    eval(['assignin(''base'', ''', varname_base, 'az'', ',  'azimuth_angle);']);
+                    eval(['assignin(''base'', ''', varname_base, 'ze'', ',  'zenith_angle);']);
+                    eval(['assignin(''base'', ''', varname_base, 'glat'', ',  'glat_beam);']);
+                    eval(['assignin(''base'', ''', varname_base, 'glon'', ',  'glon_beam);']);
                     clear data info;
                 end
             end

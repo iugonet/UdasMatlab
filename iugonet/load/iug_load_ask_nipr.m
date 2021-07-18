@@ -36,16 +36,16 @@ function   iug_load_ask_nipr(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'http://iugonet0.nipr.ac.jp/data/ask/SITE/YYYY/nipr_ask_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
+prefix='nipr_ask';
 site_list = {'hus', 'kil', 'krn', 'lyr', 'mcm', 'skb', 'sod', 'spa', 'syo', 'tja', 'tjo', 'tro'};
 datatype_list = {'0000', '4278', '5577', '6300'};
 parameter_list = {''};
 version_list = {'01', '02'}; % possible version number list
-file_format = 'cdf';
-url = ['http://iugonet0.nipr.ac.jp/data/ask/SITE/YYYY/nipr_ask_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf'];
-rootpath = default_rootpath;
 acknowledgement = sprintf(['You can write the data use policy here.\n',...
     'This description is displayed when you use this load procedure.']);
-prefix='nipr_ask_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -125,7 +125,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

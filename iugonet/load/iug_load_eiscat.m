@@ -37,15 +37,15 @@ function   iug_load_eiscat(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'http://pc115.seg20.nipr.ac.jp/www/eiscatdata/cdf/basic/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
+prefix='eiscat';
 site_list = {'tro', 'esr', 'kir', 'sod'};
 % datatype_list = {'uhf', 'vhf', '32m', '42m'};
 parameter_list = {''};
 version_list = {'03'}; % possible version number list
-file_format = 'cdf';
-url = 'http://pc115.seg20.nipr.ac.jp/www/eiscatdata/cdf/basic/SITE/DATATYPE/YYYY/eiscat_kn_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
-rootpath = default_rootpath;
 acknowledgement = sprintf(['']);
-prefix='eiscat_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -125,7 +125,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %%%%% Added below %%%%%

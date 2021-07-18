@@ -29,17 +29,17 @@ function   iug_load_gmag_magdas(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
+prefix='magdas_mag';
 site_list = {'ama', 'asb', 'daw', 'her', 'hln', 'kuj', 'laq', 'mcq', 'mgd', 'mlb',...
              'mut', 'onw', 'ptk', 'wad', 'yap'};
 datatype_list = {'1sec'};
 parameter_list = {''};
 version_list = {'01'}; % possible version number list
-file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/magdas/DATATYPE/SITE/YYYY/magdas_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
-rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
-prefix='magdas_mag_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -119,7 +119,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

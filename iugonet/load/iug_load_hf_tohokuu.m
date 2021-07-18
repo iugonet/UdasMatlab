@@ -1,13 +1,11 @@
-function   iug_load_gmag_mm210(startTime, endTime, varargin)
+function   iug_load_hf_tohokuu(startTime, endTime, varargin)
 %
-% iug_load_gmag_mm210(startTime, endTime, varargin)
+% iug_load_hf_tohokuu(startTime, endTime, varargin)
 % 
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
 % (Options)
-%   site:               Site name (ex., 'msr' or {'msr', 'rik', 'can'})
-%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1h'})
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
@@ -20,34 +18,37 @@ function   iug_load_gmag_mm210(startTime, endTime, varargin)
 %   f:                  Absolute value of geomagnetic field (nT)
 %
 % (Examples)
-%   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', 'msr', 'datatype', '1min');
-%   iug_load_gmag_mm210('2006-11-20', '2006-11-21', 'site', {'msr', 'rik'});
-% 
-% Written by Y.-M. Tanaka, April 30, 2020
+%   iug_load_hf_tohokuu('2004-01-09/22:00:00', '2004-01-09/23:00:00');
+%
+% Written by Y.-M. Tanaka, June 13, 2021
 %
 
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
 file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/mm210/DATATYPE/SITE/YYYY/mm210_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
-prefix='mm210_mag';
-site_list = {'tik', 'zgn', 'yak', 'irt', 'ppi', 'bji', 'lnp', 'mut', 'ptn', 'wtk',...
-             'lmt', 'kat', 'ktn', 'chd', 'zyk', 'mgd', 'ptk', 'msr', 'rik', 'onw',...
-             'kag', 'ymk', 'cbi', 'gua', 'yap', 'kor', 'ktb', 'bik', 'wew', 'daw',...
-             'wep', 'bsv', 'dal', 'can', 'adl', 'kot', 'cst', 'ewa', 'asa', 'mcq'};
-datatype_list = {'1sec', '1min', '1h'};
+url = 'http://adrastea.gp.tohoku.ac.jp/~jupiter/it_hf/cdf/it_h1_hf_YYYYMMDD_vVERSION.cdf';
+prefix='iug_iit_hf';
+site_list = {''};
+datatype_list = {''};
 parameter_list = {''};
 version_list = {'01'}; % possible version number list
-% acknowledgement = sprintf(['You can write the data use policy here.\n',...
-%     'This description is displayed when you use this load procedure.']);
+acknowledgement = sprintf(['Jupiter''s/solar wide band spectral data in HF-band \n',...
+    '\n',...
+    'PI and Host PI(s): Atsushi Kumamoto \n',...
+    'Affiliations: PPARC, Tohoku University \n',...
+    '\n',...
+    'Rules of the Road for HF Data Use: \n',...
+    'When the data is used in or contributes to a presentation or publication, \n',...
+    'you should let us know and make acknowledgement to the Planetary Plasma and \n',...
+    'Atmospheric Research Center, Tohoku University.']);
 rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
 %*************************************%
-site_def = 'can';
-datatype_def = 'all';
+site_def = '';
+datatype_def = '';
 parameter_def = '';
 version_def = version_list;
 downloadonly_def = 0;
@@ -112,21 +113,6 @@ if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
 end
 vs=cellstr(version);
 
-%%%%% Added below %%%%%
-idx=find(strcmp(dt_vec, '1s'));
-if ~isempty(idx), dt_vec{idx}='1sec'; end
-idx=find(strcmp(dt_vec, '1m'));
-if ~isempty(idx), dt_vec{idx}='1min'; end
-idx=find(strcmp(dt_vec, '1hr'));
-if ~isempty(idx), dt_vec{idx}='1h'; end
-
-dt_vec_org=dt_vec;
-idx_1h=find(strcmp(dt_vec, '1h'), 1);
-if ~isempty(idx_1h) 
-    dt_vec{idx_1h}='1min';
-    dt_vec=unique(dt_vec);
-end
-
 %===== Loop for site, datatype, and parameter =====%
 %----- Loop for site -----%
 for ist=1:length(st_vec)
@@ -163,9 +149,10 @@ for ist=1:length(st_vec)
             
             %===== Download files =====%
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath = 'ergsc/ground/geomag/mm210/DATATYPE/SITE/YYYY/mm210_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
+            relpath='iugonet/tohokuu/radio_obs/iit/hfspec/it_h1_hf_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
+
             if no_download==1,
                 files = file_local;
             else
@@ -188,60 +175,27 @@ for ist=1:length(st_vec)
                     %===== Display acknowledgement =====%
                     disp(' ');
                     disp('**************************************************************************************');
-                    disp(info.GlobalAttributes.Logical_source_description{1});
-                    disp(' ');
-                    disp(['Information about ', info.GlobalAttributes.Station_code{1}]);
-                    disp(['PI and Host PI(s): ', info.GlobalAttributes.PI_name{1}]);
-                    piaff=strsplit(info.GlobalAttributes.PI_affiliation{1}, '\([1-9]\)',...
-                        'DelimiterType','RegularExpression');
-                    disp('Affiliations:');
-                    for i=1:length(piaff)
-                        disp(piaff{i});
-                    end
-                    disp(' ');
-                    disp('Rules of the Road for 210 MM Data Use:');
-                    for i=1:length(info.GlobalAttributes.TEXT)
-                        disp(info.GlobalAttributes.TEXT{i});
-                    end
-                    disp(' ');
-                    disp([info.GlobalAttributes.LINK_TEXT{1}, ' ', info.GlobalAttributes.HTTP_LINK{1}]);
+                    disp(acknowledgement);
                     disp('**************************************************************************************');
                     disp(' ');
-                end
-
+                end                
+                
                 if ~isempty(data)
-                    varname_base = [prefix, st, '_'];
+                    varname_base=[varname_st_dt_pr, '_'];
                     set_varname(info, data, '');
+                    freq = double(Frequency);
+                    R = double(RH');
+                    L = double(LH');
 
                     eval(['assignin(''base'', ''', varname_base, 'all'', ', 'data);']);
                     eval(['assignin(''base'', ''', varname_base, 'info'', ', 'info);']);
-                    switch dt
-                        case '1sec'
-                            eval(['assignin(''base'', ''', varname_base, '1sec_time'', ', 'epoch_1sec);']);
-                            eval(['assignin(''base'', ''', varname_base, '1sec_hdz'', ',  'hdz_1sec);']);
-                            eval(['assignin(''base'', ''', varname_base, '1sec_f'', ', 'f_1sec);']);
-                        case '1min'
-                            if ~isempty(find(strcmp(dt_vec_org, '1min'), 1))
-                                eval(['assignin(''base'', ''', varname_base, '1min_time'', ', 'epoch_1min);']);
-                                eval(['assignin(''base'', ''', varname_base, '1min_hdz'', ',  'hdz_1min);']);
-                                eval(['assignin(''base'', ''', varname_base, '1min_f'', ', 'f_1min);']);
-                            end
-                            if ~isempty(find(strcmp(dt_vec_org, '1h'), 1))
-                                eval(['assignin(''base'', ''', varname_base, '1h_time'', ', 'epoch_1h);']);
-                                eval(['assignin(''base'', ''', varname_base, '1h_hdz'', ',  'hdz_1h);']);
-                                eval(['assignin(''base'', ''', varname_base, '1h_f'', ', 'f_1h);']);
-                            end
-                        otherwise
-                            error('Such datatype is not allowed!');
-                    end
-
-                    clear data info;
+                    eval(['assignin(''base'', ''', varname_base, 'time'', ', 'Epoch);']); 
+                    eval(['assignin(''base'', ''', varname_base, 'freq'', ',  'freq);']);
+                    eval(['assignin(''base'', ''', varname_base, 'R'', ', 'R);']);
+                    eval(['assignin(''base'', ''', varname_base, 'L'', ', 'L);']);
                 end
             end
         end
     end
 end
-
-%===== Display acknowledgement =====%
-% disp(acknowledgement);
 

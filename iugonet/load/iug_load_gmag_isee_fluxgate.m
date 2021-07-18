@@ -29,16 +29,16 @@ function   iug_load_gmag_isee_fluxgate(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
+file_format = 'cdf';
+url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
+prefix='isee_fluxgate_mag';
 site_list = {'msr', 'rik', 'kag', 'ktb', 'mdm', 'tew'};
 datatype_list = {'1sec', '1min', '1h'};
 parameter_list = {''};
 version_list = {'01'}; % possible version number list
-file_format = 'cdf';
-url = 'https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/ground/geomag/isee/fluxgate/DATATYPE/SITE/YYYY/isee_fluxgate_DATATYPE_SITE_YYYYMMDD_vVERSION.cdf';
-rootpath = default_rootpath;
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
-prefix='isee_fluxgate_mag_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -133,7 +133,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

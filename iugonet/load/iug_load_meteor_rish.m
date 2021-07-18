@@ -5,34 +5,20 @@ function   iug_load_meteor_rish(startTime, endTime, varargin)
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
-% (Options)
 %   site:               Site name (ex., 'sgk' or {'bik', 'ktb', 'srp'})
 %   parameter:          Parameter (ex., 'h2t60min00' or {'h2t60min00', 'h2t60min30'})
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
 %
-% (Returns)
-%   all:                a cell array that includes all data
-%   info:               Metadata
-%   time:               a serial date number
-%   range:              Range (km)
-%   uwind:              Zonal wind velocity (m/s)
-%   vwind:              Meridional wind velocity (m/s)
-%   sig_uwind:          Standard deviation of zonal wind velocity (m/s)
-%   sig_vwind:          Standard deviation of meridional wind velocity (m/s)
-%
 % (Examples)
 %   iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', 'bik', 'parameter', 'h2t60min00');
 %   iug_load_meteor_rish('2011-10-01', '2011-11-01', 'site', {'bik', 'ktb'});
-%
-% Written by Y.-M. Tanaka, April 30, 2020
-%
 
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
 file_format = 'netcdf';
-prefix='iug_meteor_';
+prefix='iug_meteor';
 site_list = {'bik', 'ktb', 'sgk', 'srp'};
 datatype_list = {''};
 parameter_list = {'h2t60min00', 'h2t60min30', 'h4t60min00', 'h4t60min30', 'h4t240min00'};
@@ -123,7 +109,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

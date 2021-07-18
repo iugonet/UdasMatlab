@@ -28,16 +28,16 @@ function   iug_load_gmag_nipr_induction(startTime, endTime, varargin)
 %********************************%
 %***** Step1: Set paramters *****%
 %********************************%
-site_list = {'syo', 'hus', 'tjo', 'aed', 'isa'};
-% datatype_list = {'1sec', '2sec', '02hz'};
-parameter_list = {''};
-version_list = {'01','02'}; % possible version number list
 file_format = 'cdf';
 url = 'http://iugonet0.nipr.ac.jp/data/imag/SITE/DATATYPE/YYYY/nipr_DATATYPE_imag_SITE_YYYYMMDD_vVERSION.cdf';
-rootpath = default_rootpath;
+prefix='nipr_imag';
+site_list = {'syo', 'hus', 'tjo', 'aed', 'isa'};
+datatype_list = {''};
+parameter_list = {''};
+version_list = {'01','02'}; % possible version number list
 % acknowledgement = sprintf(['You can write the data use policy here.\n',...
 %     'This description is displayed when you use this load procedure.']);
-prefix='nipr_imag_';
+rootpath = default_rootpath;
 
 %*************************************%
 %***** Step2: Set default values *****%
@@ -100,9 +100,9 @@ pr_vec=cellstr(parameter);
 if strcmp(lower(st_vec{1}),'all') || strcmp(st_vec{1},'*')
     st_vec=site_list;
 end
-% if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
-%     dt_vec=datatype_list;
-% end
+if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
+    dt_vec=datatype_list;
+end
 if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
     pr_vec=parameter_list;
 end
@@ -117,7 +117,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %%%%% Added below %%%%%

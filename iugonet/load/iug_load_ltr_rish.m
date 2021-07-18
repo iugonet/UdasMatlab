@@ -1,56 +1,82 @@
-function   iug_load_gmag_nipr(startTime, endTime, varargin)
+function   iug_load_ltr_rish(startTime, endTime, varargin)
 %
-% iug_load_gmag_nipr(startTime, endTime, varargin)
+% iug_load_ltr_rish(startTime, endTime, varargin)
 % 
+% A template of load function.
+%
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
 % (Options)
-%   site:               Site name (ex., 'syo' or {'syo', 'hus', 'tjo'})
-%   datatype:           Data type (ex., '1sec')
+%   site:               Site name (ex., 'asb' or {'asb', 'ama', 'kuj'})
+%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1hr'})
+%   parameter:          Parameter (ex., 'par1' or {'par1', 'par2', 'par3'})
 %   version:            Version number (ex., '1')
-%   downloadonly:       0: Load data after download, 1: Download only
-%   no_download:        0: Download files, 1: No download before loading data
+%   downloadonly:       0:Load data after download, 1:Download only
+%   no_download:        0:Download files, 1:No download before loading data
+%   username:           Username (for https)
+%   password:           Password (for https)
 %
 % (Returns)
-%   all:                a cell array that includes all data
-%   info:               Metadata
-%   time:               a serial date number
-%   hdz:                3 components of geomagnetic field vector (nT)
-%   f:                  Absolute value of geomagnetic field (nT)
+%   automatically-named variables
 %
 % (Examples)
-%   iug_load_gmag_nipr('2017-1-1', '2017-1-2', 'site', 'syo');
-%   iug_load_gmag_nipr('2017-1-1', '2017-1-2', 'site', {'syo','tjo'});
+%   template_loadfun('2017-1-1', '2017-1-2', 'site', 'asb');
+%   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
 % 
 % Written by Y.-M. Tanaka, April 30, 2020
-% 
+% Modified by Y.-M. Tanaka, July 27, 2020
+%
 
 %********************************%
-%***** Step1: Set paramters *****%
+%***** Step1: Set parameters *****%
 %********************************%
-file_format = 'cdf';
-url = 'http://iugonet0.nipr.ac.jp/data/fmag/SITE/DATATYPE/YYYY/nipr_DATATYPE_fmag_SITE_YYYYMMDD_vVERSION.cdf';
-prefix='nipr_mag';
-site_list = {'syo', 'hus', 'tjo', 'aed', 'isa', 'h57', 'amb', 'srm', 'ihd', 'skl', 'h68'};
-datatype_list = {'1sec', '2sec', '02hz'};
-parameter_list = {''};
-version_list = {'01','02'}; % possible version number list
-% acknowledgement = sprintf(['You can write the data use policy here.\n',...
-%     'This description is displayed when you use this load procedure.']);
+file_format = 'ascii'; % 'cdf' or 'netcdf'
+url='http://www.rish.kyoto-u.ac.jp/radar-group/blr/shigaraki/data/data/ver02.0212/YYYYMM/YYYYMMDD/YYYYMMDD.PARAMETER.csv'
+prefix = 'iug_ltr';
+site_list = {'sgk'}; % ex. {'sta1', 'sta2', 'sta3'}
+datatype_list = {''}; % ex. {'1sec', '1min', '1hr'}
+parameter_list = {'uwnd', 'vwnd', 'wwnd', 'pwr1', 'pwr2', 'pwr3', 'pwr4',...
+    'pwr5', 'wdt1', 'wdt2', 'wdt3', 'wdt4', 'wdt5'}; % ex. {'par1', 'par2', 'par3'}
+version_list = {''}; % ex. {'01', '02', '03'}
+acknowledgement = sprintf(['If you acquire the lower troposphere radar (LTR) data, \n',...
+    'we ask that you acknowledge us in your use of the data. This may be done by \n',...
+    'including text such as the LTR data provided by Research Institute \n',...
+    'for Sustainable Humanosphere of Kyoto University. We would also \n',...
+    'appreciate receiving a copy of the relevant publications. The distribution of \n',...
+    'LTR data has been partly supported by the IUGONET (Inter-university Upper \n',...
+    'atmosphere Global Observation NETwork) project (http://www.iugonet.org/) funded \n',...
+    'by the Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan.']);
 rootpath = default_rootpath;
+
+%----- Set parameters for ascii files -----%
+format_type = 3;
+% time_column = 1;   % for test
+time_column = [1,2,3,4,5];
+% time_format = 'yyyy/MM/dd HH:mm';  % for test
+time_format = {'yyyy', 'MM', 'dd', 'HH', 'mm'};
+input_time = [-1, -1, -1, -1, -1, 0];
+%input_time = [2013, 1, 1, -1, -1, -1]; % input_time should be made from startTime and endTime.
+localtime = 9;
+delimiter = {'/', ' ', ':', ','};
+% [SysLab]
+data_start = 2;
+comment_symbol = '';
+no_convert_time = 0;
+header_only = 0;
 
 %*************************************%
 %***** Step2: Set default values *****%
 %*************************************%
-site_def = 'syo';
-datatype_def = 'all';
-parameter_def = '';
+site_def = 'all';
+datatype_def = '';
+parameter_def = 'all';
 version_def = version_list;
 downloadonly_def = 0;
 no_download_def = 0;
 username_def = '';
 password_def = '';
+%time_format='yyyy-MM-dd HH:mm:ss Z'; % Time format string for NetCDF
 
 %===== Set input arguments =====%
 p = inputParser;
@@ -61,11 +87,11 @@ addRequired(p, 'startTime', validTime);
 addRequired(p, 'endTime', validTime);
 
 %----- Input arguments as parameters -----%
-validSite = @(x) iscell(x) || ischar(x) || isstring(x);
+validSite = @(x) iscell(x) || ischar(x);
 addParameter(p, 'site', site_def, validSite);
-validDataType = @(x) iscell(x) || ischar(x) || isstring(x);
+validDataType = @(x) iscell(x) || ischar(x);
 addParameter(p, 'datatype', datatype_def, validDataType);
-validParameters = @(x) iscell(x) || ischar(x) || isstring(x);
+validParameters = @(x) iscell(x) || ischar(x);
 addParameter(p, 'parameter', parameter_def, validParameters);
 validVersion = @(x) isscalar(x);
 addParameter(p, 'version', version_def, validVersion);
@@ -90,20 +116,20 @@ no_download  = p.Results.no_download;
 username     = p.Results.username;
 password     = p.Results.password;
 
-%===== Set local dierectory for saving data files =====%
+%===== Set local directory for saving data files =====%
 % ipos=strfind(url, '://')+3;
 % relpath = url(ipos:end);
 
 %===== Input of 'all'and '*' means all elements =====%
 st_vec=cellstr(site); % convert to cell of char
-dt_vec_org=cellstr(datatype);
+dt_vec=cellstr(datatype);
 pr_vec=cellstr(parameter);
 if strcmp(lower(st_vec{1}),'all') || strcmp(st_vec{1},'*')
     st_vec=site_list;
 end
-% if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
-%     dt_vec=datatype_list;
-% end
+if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
+    dt_vec=datatype_list;
+end
 if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
     pr_vec=parameter_list;
 end
@@ -121,23 +147,6 @@ for ist=1:length(st_vec)
         varname_st=[prefix, '_', st];
     end
     
-    %%%%% Added below %%%%%
-    switch st
-        case {'hus', 'tjo', 'aed'}
-            datatype_list = {'2sec', '02hz'};
-        case 'syo'
-            datatype_list = {'1sec', '2sec'};
-        case 'isa'
-            datatype_list = {'2sec'};
-        otherwise
-            datatype_list = {'1sec'};
-    end
-    if strcmp(lower(dt_vec_org{1}),'all') || strcmp(dt_vec_org{1},'*')
-        dt_vec=datatype_list;
-    else
-        dt_vec=dt_vec_org;
-    end
-
     %----- Loop for datatype -----%
     for idt=1:length(dt_vec)
         dt=dt_vec{idt}; 
@@ -161,11 +170,10 @@ for ist=1:length(st_vec)
             end
             
             %===== Download files =====%
+            relpath='iugonet/rish/misc/SITE/ltr/csv/YYYYMM/YYYYMMDD/YYYYMMDD.PARAMETER.csv';
             file_url = replace_string(url, startTime, endTime, st, dt, pr, vs);
-            relpath='iugonet/nipr/fmag/SITE/DATATYPE/YYYY/nipr_DATATYPE_fmag_SITE_YYYYMMDD_vVERSION.cdf';
             file_relpath = replace_string(relpath, startTime, endTime, st, dt, pr, vs);
             file_local = replace_string([rootpath, relpath], startTime, endTime, st, dt, pr, vs);
-
             if no_download==1,
                 files = file_local;
             else
@@ -179,43 +187,28 @@ for ist=1:length(st_vec)
                     case 'cdf'
                         [data, info]=load_cdf(startTime, endTime, files);
                     case 'netcdf'
-                        [data, info]=load_netcdf(startTime, endTime, files);
+                        [data, info]=load_netcdf(startTime, endTime, files, 'time_format', time_format);
+                    case 'ascii'
+                        [data, info]=load_ascii(startTime, endTime, files,...
+							'format_type', format_type, 'time_column', time_column,...
+							'time_format', time_format, 'input_time', input_time,...
+							'localtime', localtime, 'delimiter', delimiter,...
+							'data_start',  data_start, 'comment_symbol', comment_symbol,...
+							'no_convert_time', no_convert_time, 'header_only', header_only);
                     otherwise
                         error('Such a file_format is not allowed in this version.');
                 end
 
-                if ~isempty(info)
-                    %===== Display acknowledgement =====%
-                    disp(' ');
-                    disp('**************************************************************************************');
-                    disp(info.GlobalAttributes.Logical_source_description{1});
-                    disp(' ');
-                    disp(['Information about ', info.GlobalAttributes.Station_code{1}]);
-                    disp(' ');
-                    disp(['PI: ', info.GlobalAttributes.PI_name{1}]);
-                    disp(' ');
-                    disp('Affiliations:');
-                    disp_str_maxlet(info.GlobalAttributes.PI_affiliation{1});
-                    disp(' ');
-                    disp('Rules of the Road for NIPR All-Sky Imager Data:');
-                    for i=1:length(info.GlobalAttributes.TEXT)
-                        disp_str_maxlet(info.GlobalAttributes.TEXT{i});
-                    end
-                    disp(' ');
-                    disp([info.GlobalAttributes.LINK_TEXT{1}, ' ', info.GlobalAttributes.HTTP_LINK{1}]);
-                    disp('**************************************************************************************');
-                    disp(' ');
-                end                
-                
                 if ~isempty(data)
-                    varname_base = [varname_st_dt_pr, '_'];
-                    set_varname(info, data, '');
-                    
-                    eval(['assignin(''base'', ''', varname_base, 'all'', ', 'data);']);
-                    eval(['assignin(''base'', ''', varname_base, 'info'', ', 'info);']);
-                    eval(['assignin(''base'', ''', varname_base, 'time'', ', 'epoch_', dt, ');']);
-                    eval(['assignin(''base'', ''', varname_base, 'hdz'', ',  'hdz_', dt, ');']);
-                    eval(['assignin(''base'', ''', varname_base, 'f'', ', 'f_', dt, ');']);
+                    varname_base=[varname_st_dt_pr];
+                    time = data{1};
+                    dat_pr = [data{2}(:, 6:end)]';
+                    alt=str2num(info.Text{1})';
+                    eval(['assignin(''base'', ''', varname_base, '_all'', ', 'data);']);
+                    eval(['assignin(''base'', ''', varname_base, '_info'', ', 'info);']);
+                    eval(['assignin(''base'', ''', varname_base, '_time'', ', 'time);']);
+                    eval(['assignin(''base'', ''', varname_base, '_alt'', ', 'alt);']);
+                    eval(['assignin(''base'', ''', varname_base, ''', ', 'dat_pr);']);
                     clear data info;
                 end
             end
@@ -224,4 +217,5 @@ for ist=1:length(st_vec)
 end
 
 %===== Display acknowledgement =====%
-% disp(acknowledgement);
+disp(acknowledgement);
+

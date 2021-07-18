@@ -30,7 +30,7 @@ function   iug_load_mf_rish(startTime, endTime, varargin)
 %***** Step1: Set paramters *****%
 %********************************%
 file_format = 'netcdf';
-prefix='iug_mf_';
+prefix='iug_mf';
 site_list = {'pam', 'pon'};
 datatype_list = {''};
 parameter_list = {''};
@@ -121,7 +121,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%
