@@ -33,7 +33,7 @@ function   loadfunc_template(startTime, endTime, varargin)
 %********************************%
 file_format = 'cdf'; % 'cdf' or 'netcdf'
 url = 'http://www.iugonet.org/data/SITE/DATATYPE/YYYY/mag_SITE_DATATYPE_YYYYMMDD_vVERSION.cdf';
-prefix = 'iug_';
+prefix = 'iug_tmp';
 site_list = {''}; % ex. {'sta1', 'sta2', 'sta3'}
 datatype_list = {''}; % ex. {'1sec', '1min', '1hr'}
 parameter_list = {''}; % ex. {'par1', 'par2', 'par3'}
@@ -121,7 +121,7 @@ for ist=1:length(st_vec)
     if isempty(st)
         varname_st=prefix;
     else
-        varname_st=[prefix, st];
+        varname_st=[prefix, '_', st];
     end
     
     %----- Loop for datatype -----%

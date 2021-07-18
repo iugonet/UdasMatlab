@@ -31,6 +31,10 @@ if isfield(info, 'Format')
     switch lower(info.Format)
         case 'cdf'
             type = 'cdf';
+        case 'fits'
+            type = 'fits';
+        case 'ascii'
+            type = 'ascii';
         otherwise
             type = 'netcdf';
     end
@@ -166,6 +170,21 @@ switch type
 
         end
 
-        
+    case 'ascii'
+        for i = 1:length(info.Text)
+            disp(info.Text{i});
+        end
+    case 'fits'
+        key = info(1).PrimaryData.Keywords;
+        [sy, sx] = size(key);
+        for i=1:sy
+            if isnumeric(key{i,2})
+                tmp = num2str(key{i,2});
+            else
+                tmp = key{i,2};
+            end
+            fprintf('%16s\t= %32s\t/%s\n', key{i,1}, tmp, key{i,3});
+        end
+        disp(' ');
 end
 
