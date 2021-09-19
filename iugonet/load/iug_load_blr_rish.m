@@ -1,28 +1,30 @@
 function   iug_load_blr_rish(startTime, endTime, varargin)
 %
-% loadfun_template(startTime, endTime, varargin)
+% iug_load_blr_rish(startTime, endTime, varargin)
 % 
-% A template of load function.
-%
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
 % (Options)
-%   site:               Site name (ex., 'asb' or {'asb', 'ama', 'kuj'})
-%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1hr'})
-%   parameter:          Parameter (ex., 'par1' or {'par1', 'par2', 'par3'})
-%   version:            Version number (ex., '1')
-%   downloadonly:       0:Load data after download, 1:Download only
-%   no_download:        0:Download files, 1:No download before loading data
-%   username:           Username (for https)
-%   password:           Password (for https)
+%   site:               Site name (ex., 'ktb' or {'ktb', 'sgk', 'srp'})
+%   parameter:          Parameter (ex., 'uwnd' or {'uwnd', 'vwnd', 'wwnd', 
+%                           'pwr1', 'pwr2', 'pwr3', 'pwr4', 'pwr5', 
+%                           'wdt1', 'wdt2', 'wdt3', 'wdt4', 'wdt5'})
+%   downloadonly:       0: Load data after download, 1: Download only
+%   no_download:        0: Download files, 1: No download before loading data
 %
 % (Returns)
-%   automatically-named variables
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   alt:                Altitude (km)
+%   uwnd:               Zonal wind velocity (m/s)
+%   vwnd:               Meridional wind velocity (m/s)
+%   wwnd:               Vertical wind velocity (m/s)
 %
 % (Examples)
-%   template_loadfun('2017-1-1', '2017-1-2', 'site', 'asb');
-%   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
+%   iug_load_blr_rish('2007-8-1', '2007-8-6', 'site', 'ktb');
+%   iug_load_blr_rish('2007-8-1', '2007-8-6', 'site', 'ktb', 'parameter', {'uwnd','vwnd','wwnd'});
 % 
 % Written by Y.-M. Tanaka, April 30, 2020
 % Modified by Y.-M. Tanaka, July 27, 2020

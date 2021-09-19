@@ -6,8 +6,7 @@ function   iug_load_eiscat_vief(startTime, endTime, varargin)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
 % (Options)
-%   site:               Site name (ex., 'tro' or {'tro', 'esr'})
-%   antenna:            Antenna type (ex., 'uhf' or {'vhf', '32m', '42m'})
+%   site:               Site name (now, only 'kst' is available)
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
@@ -17,15 +16,16 @@ function   iug_load_eiscat_vief(startTime, endTime, varargin)
 %   info:               Metadata
 %   time:               a serial date number
 %   alt:                Altitude (km)
-%   range:              Range (km)
-%   Ne:                 Electron density (m^-3)
-%   Ne_err:             Error of electron density (m^-3)
-%   Te:                 Electron temperature (K)
-%   Te_err:             Error of electron temperature (K)
-%   Ti:                 Ion temperature (K)
-%   Ti_err:             Error of ion temperature (K)
-%   Vi:                 Ion velocity (m/s)
-%   Vi_err:             Error of ion velocity (m/s)
+%   E:                  Electric field (mV/m)
+%   E_err:              Error of electric field (mV/m)
+%   vi:                 Ion velocity vector (m/s)
+%   vi_err:             Error of ion velocity vector(m/s)
+%   lat:                latitude (degree)
+%   long:               longitude (degree)
+%   inttim:             nominal integration time (s)
+%   inttimr:            real integration time (s)
+%   pulse:              pulse code ID
+%   q:                  data quality
 %
 % (Examples)
 %   iug_load_eiscat_vief('2011-2-4', '2011-2-8', 'site', 'kst');

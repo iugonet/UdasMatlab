@@ -1,15 +1,29 @@
 function   iug_load_irio_nipr(startTime, endTime, varargin)
 %
-% [data, info]=template_loadfun(startTime, endTime, varargin)
+% iug_load_irio_nipr(startTime, endTime, varargin)
 % 
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
+% (Options)
 %   site:               Site name (ex., 'syo' or {'syo', 'tjo', 'hus'})
-%   datatype:           Data type (ex., '30' or {'30', '38'})
+%   datatype:           Observation frequency (MHz) (ex., '30' or {'30', '38'}, 
+%                           where 38 means 38.2MHz.)
 %   version:            Version number (ex., '1')
 %   downloadonly:       0: Load data after download, 1: Download only
 %   no_download:        0: Download files, 1: No download before loading data
+%
+% (Returns)
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time_1sec:          a serial date number at 1sec resolution
+%   time_1min:          a serial date number at 1min resolution
+%   cna:                cosmic noise absorption (CNA) (dB) at 1sec resolution
+%   qdc:                quiet day curve (QDC) at 1min resolution
+%   glat:               geographic latitude (degree) for each beam
+%   glon:               geographic longutude (degree) for each beam
+%   ze:                 zenith angle (degree) for each beam
+%   az:                 azimuth angle (degree) for each beam
 %
 % (Examples)
 %   iug_load_irio_nipr('2017-1-1', '2017-1-2', 'site', 'syo');

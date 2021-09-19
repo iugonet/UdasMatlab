@@ -2,27 +2,24 @@ function   iug_load_iprt(startTime, endTime, varargin)
 %
 % iug_load_iprt(startTime, endTime, varargin)
 % 
-% A template of load function.
-%
 % (Input arguments)
 %   startTime:          Start time (datetime or char or datenum)
 %   endTime:            End time (datetime or char or datenum)
 % (Options)
-%   site:               Site name (ex., 'asb' or {'asb', 'ama', 'kuj'})
-%   datatype:           Data type (ex., '1sec' or {'1sec', '1min', '1hr'})
-%   parameter:          Parameter (ex., 'par1' or {'par1', 'par2', 'par3'})
-%   version:            Version number (ex., '1')
+%   datatype:           Data type (ex., 'Sun' or {'Sun', 'Jupiter'})
 %   downloadonly:       0:Load data after download, 1:Download only
 %   no_download:        0:Download files, 1:No download before loading data
-%   username:           Username (for https)
-%   password:           Password (for https)
 %
 % (Returns)
-%   automatically-named variables
+%   all:                a cell array that includes all data
+%   info:               Metadata
+%   time:               a serial date number
+%   freq:               Frequency (Hz)
+%   R:                  Power flux density in right-handed circular polarization
+%   L:                  Power flux density in left-handed circular polarization
 %
 % (Examples)
-%   template_loadfun('2017-1-1', '2017-1-2', 'site', 'asb');
-%   template_loadfun('2017-1-1', '2017-1-2', 'site', {'asb','kuj'});
+%   iug_load_iprt('2010-11-1 00:00', '2010-11-1 00:10', 'datatype', 'sun');
 % 
 % Written by Y.-M. Tanaka, April 30, 2020
 % Modified by Y.-M. Tanaka, July 27, 2020

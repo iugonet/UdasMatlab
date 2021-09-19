@@ -14,8 +14,9 @@ function   iug_load_hf_tohokuu(startTime, endTime, varargin)
 %   all:                a cell array that includes all data
 %   info:               Metadata
 %   time:               a serial date number
-%   hdz:                3 components of geomagnetic field vector (nT)
-%   f:                  Absolute value of geomagnetic field (nT)
+%   freq:               Frequency (Hz)
+%   R:                  Power flux density in right-handed circular polarization
+%   L:                  Power flux density in left-handed circular polarization
 %
 % (Examples)
 %   iug_load_hf_tohokuu('2004-01-09/22:00:00', '2004-01-09/23:00:00');
