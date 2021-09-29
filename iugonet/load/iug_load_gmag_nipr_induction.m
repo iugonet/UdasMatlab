@@ -100,9 +100,9 @@ pr_vec=cellstr(parameter);
 if strcmp(lower(st_vec{1}),'all') || strcmp(st_vec{1},'*')
     st_vec=site_list;
 end
-if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
-    dt_vec=datatype_list;
-end
+% if strcmp(lower(dt_vec{1}),'all') || strcmp(dt_vec{1},'*')
+%     dt_vec=datatype_list;
+% end
 if strcmp(lower(pr_vec{1}),'all') || strcmp(pr_vec{1},'*')
     pr_vec=parameter_list;
 end

@@ -207,7 +207,7 @@ for ist=1:length(st_vec)
                 end
 
                 if ~isempty(data)
-                    varname_base = [prefix, st, '_'];
+                    varname_base = [varname_st, '_'];
                     set_varname(info, data, '');
 
                     eval(['assignin(''base'', ''', varname_base, 'all'', ', 'data);']);
