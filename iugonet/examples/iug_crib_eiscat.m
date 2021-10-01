@@ -61,7 +61,7 @@ set(gca, 'clim', [-200, 200]);
 h=colorbar;
 h.Label.String='Vi [m/s]';
 datetick('x', 'HH:MM')
-title('Te')
+title('Vi')
 xlabel('UT');
 ylabel('Altitude [km]')
 
