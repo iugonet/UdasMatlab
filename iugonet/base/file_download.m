@@ -127,7 +127,8 @@ for i=1:n_urls
         
         if isempty(username) || isempty(password)
             try
-                outfile_tmp = websave(local_tmp, url_tmp);
+                options = weboptions('CertificateFilename', '');
+                outfile_tmp = websave(local_tmp, url_tmp, options);
                 disp(['Data Saving ... ', local_tmp]);
             catch ME
                 outfile_tmp = [];
@@ -137,7 +138,7 @@ for i=1:n_urls
         else
             try
                 % Set username and password
-                options = weboptions('Username', username, 'Password', password);
+                options = weboptions('CertificateFilename', '', 'Username', username, 'Password', password);
                 outfile_tmp = websave(local_tmp, url_tmp, options);
                 disp(['Data Saving ... ', local_tmp]);
             catch ME
